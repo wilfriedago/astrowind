@@ -1,11 +1,12 @@
 export const SITE = {
-	name: 'AstroWind',
+	name: 'Wilfried AGO | Frontend Developer',
 
-	origin: 'https://astrowind.vercel.app',
+	origin: 'https://wilfriedago.me',
 	basePathname: '/',
 
-	title: 'AstroWind — Your website with Astro + Tailwind CSS',
-	description: '🚀 AstroWind is a free and ready to start template to make your website using Astro and Tailwind CSS.',
+	title: 'Wilfried AGO | Frontend Developer',
+	description:
+		"I'm a Frontend Developer based in Cotonou, Benin. I'm passionate about web development and I love to learn new things.",
 
 	googleAnalyticsId: false, // or "G-XXXXXXXXXX",
 	googleSiteVerificationId: 'orcPxI47GSa-cRvY11tUe6iGg2IO_RPvnA1q95iEM3M',
@@ -22,7 +23,7 @@ export const BLOG = {
 
 	post: {
 		disabled: false,
-		pathname: '', // empty for /some-post, value for /pathname/some-post 
+		pathname: '', // empty for /some-post, value for /pathname/some-post
 	},
 
 	category: {
@@ -33,5 +34,10 @@ export const BLOG = {
 	tag: {
 		disabled: false,
 		pathname: 'tag', // set empty to change from /tag/some-tag to /some-tag
+	},
+
+	projects: {
+		disabled: false,
+		pathname: 'projects', // set empty to change from /projects/some-project to /some-project
 	},
 };
