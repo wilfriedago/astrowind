@@ -2,14 +2,13 @@ export const SITE = {
 	name: 'Wilfried AGO | Frontend Developer',
 
 	origin: 'https://wilfriedago.me',
-	basePathname: '/',
+	basePathname: '/astrowind',
 
 	title: 'Wilfried AGO | Frontend Developer',
-	description:
-		"I'm a Frontend Developer based in Cotonou, Benin. I'm passionate about web development and I love to learn new things.",
+	description: "I'm a Frontend Developer based in Cotonou, Benin. I'm passionate about web development and I love to learn new things.",
 
-	googleAnalyticsId: false, // or "G-XXXXXXXXXX",
-	googleSiteVerificationId: 'orcPxI47GSa-cRvY11tUe6iGg2IO_RPvnA1q95iEM3M',
+	googleAnalyticsId: '', // or "G-XXXXXXXXXX",
+	googleSiteVerificationId: '',
 };
 
 export const BLOG = {
@@ -40,4 +39,89 @@ export const BLOG = {
 		disabled: false,
 		pathname: 'projects', // set empty to change from /projects/some-project to /some-project
 	},
+};
+
+export const SOCIALS = {
+	disabled: false,
+	links: [
+		{
+			name: 'Twitter',
+			url: 'https://twitter.com/wilfriedago_',
+		},
+		{
+			name: 'Github',
+			url: 'https://github.com/wilfriedago',
+		},
+		{
+			name: 'LinkedIn',
+			url: 'https://www.linkedin.com/in/wilfriedago/',
+		},
+		{
+			name: 'Instagram',
+			url: 'https://www.instagram.com/wilfriedago_/',
+		},
+	],
+};
+
+export const CONTACT = {
+	disabled: false,
+	email: 'contact@wilfriedago.me',
+};
+
+export const PROJECTS = {
+	disabled: false,
+	projectsPerPage: 3,
+	list: [
+		{
+			id: '1',
+			title: 'Portfolio',
+			description: 'My personal portfolio',
+			image: '/images/portfolio.png',
+			technologies: ['Next.js', 'Tailwind CSS'],
+			links: [
+				{
+					name: 'Github',
+					url: '',
+				},
+				{
+					name: 'Website',
+					url: '',
+				},
+			],
+		},
+		{
+			id: '2',
+			title: 'Weather App',
+			description: 'My personal portfolio',
+			image: '/images/portfolio.png',
+			technologies: ['Next.js', 'Tailwind CSS'],
+			links: [
+				{
+					name: 'Github',
+					url: '',
+				},
+				{
+					name: 'Website',
+					url: '',
+				},
+			],
+		},
+		{
+			id: '3',
+			title: 'Les Editions du Flamboyant',
+			description: 'Booking selling website',
+			image: '/images/portfolio.png',
+			technologies: ['Next.js', 'Tailwind CSS'],
+			links: [
+				{
+					name: 'Github',
+					url: '',
+				},
+				{
+					name: 'Website',
+					url: '',
+				}
+			],
+		},
+	]
 };
