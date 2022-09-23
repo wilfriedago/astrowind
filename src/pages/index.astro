@@ -1,33 +1,58 @@
 ---
-import { SITE } from '~/config.mjs';
+import { SITE, SOCIALS } from '~/config.mjs';
 import { getCanonical, getHomePermalink } from '~/utils/permalinks';
-import Layout from '~/layouts/PageLayout.astro';
 
-import Hero from '~/components/widgets/Hero.astro';
-import Features from '~/components/widgets/Features.astro';
-import Features2 from '~/components/widgets/Features2.astro';
-import Steps from '~/components/widgets/Steps.astro';
-import Features3 from '~/components/widgets/Features3.astro';
-import HighlightedPosts from '~/components/blog/HighlightedPosts.astro';
-import FAQs from '~/components/widgets/FAQs.astro';
-import Stats from '~/components/widgets/Stats.astro';
-import CallToAction from '~/components/widgets/CallToAction.astro';
+import About from '~/components/containers/About.astro';
+import Home from '~/components/containers/Home.astro';
+import Contact from '~/components/containers/Contact.astro';
+import Layout from '~/layouts/PageLayout.astro';
+import Pagination from '~/components/core/Pagination.astro';
+import Portfolio from '~/components/containers/Portfolio.astro';
+import Section from '~/components/widgets/Section.astro';
+import SocialLinks from '~/components/core/SocialLinks.astro';
 
 const meta = {
 	title: SITE.title,
 	description: SITE.description,
 	canonical: getCanonical(getHomePermalink()),
 };
+
+const sections = [
+	{
+		id: 'home',
+		hasHeader: false,
+		component: Home,
+	},
+	{
+		id: 'portfolio',
+		title: 'Portfolio',
+		description: 'Showcasing my recent work',
+		hasHeader: true,
+		component: Portfolio,
+	},
+	{
+		id: 'about',
+		title: 'About Me',
+		description: 'Learn more about me',
+		hasHeader: true,
+		component: About,
+	},
+	{
+		id: 'contact',
+		hasHeader: false,
+		component: Contact,
+	},
+];
 ---
 
 <Layout {meta}>
-	<Hero />
-	<Features />
-	<Steps />
-	<Features2 />
-	<Features3 />
-	<HighlightedPosts />
-	<FAQs />
-	<Stats />
-	<CallToAction />
+	{
+		sections.map((section) => (
+			<Section {...section}>
+				<section.component />
+			</Section>
+		))
+	}
+	<Pagination />
+	<SocialLinks links={!SOCIALS.disabled ? SOCIALS.links : []} />
 </Layout>
