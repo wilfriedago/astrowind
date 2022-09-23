@@ -34,11 +34,6 @@ export const BLOG = {
 		disabled: false,
 		pathname: 'tag', // set empty to change from /tag/some-tag to /some-tag
 	},
-
-	projects: {
-		disabled: false,
-		pathname: 'projects', // set empty to change from /projects/some-project to /some-project
-	},
 };
 
 export const SOCIALS = {
@@ -65,7 +60,7 @@ export const SOCIALS = {
 
 export const CONTACT = {
 	disabled: false,
-	email: 'contact@wilfriedago.me',
+	email: '',
 };
 
 export const PROJECTS = {
