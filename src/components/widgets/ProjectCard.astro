@@ -1,0 +1,19 @@
+---
+export interface Props {
+	id: string;
+	title?: string;
+	description?: string;
+	image?: string;
+	technologies?: string[];
+	links?: {
+		github?: string;
+		website?: string;
+	}[];
+}
+
+const { id, title, description, image, technologies, links } = Astro.props as Props;
+---
+
+<article id={id} class="p-6 flex flex-col md:flex-row items-center gap-x-8 rounded-md bg-white w-4/5 cursor-pointer">
+	<h3 class="text-gray-900 text-xl leading-tight font-medium mb-2">{title}</h3>
+</article>
