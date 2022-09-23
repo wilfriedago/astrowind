@@ -21,6 +21,7 @@ export const BLOG_BASE = cleanSlug(BLOG?.blog?.pathname);
 export const POST_BASE = cleanSlug(BLOG?.post?.pathname);
 export const CATEGORY_BASE = cleanSlug(BLOG?.category?.pathname);
 export const TAG_BASE = cleanSlug(BLOG?.tag?.pathname);
+export const PROJECTS_BASE = cleanSlug(BLOG?.projects?.pathname);
 
 /** */
 export const getCanonical = (path = '') => new URL(path, SITE.origin);
@@ -38,6 +39,9 @@ export const getPermalink = (slug = '', type = 'page') => {
 
 		case 'post':
 			return createPath(basePathname, POST_BASE, _slug);
+
+		case 'project':
+			return createPath(basePathname, PROJECTS_BASE, _slug);
 
 		case 'page':
 		default:
