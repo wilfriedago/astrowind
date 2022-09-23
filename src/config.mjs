@@ -2,7 +2,7 @@ export const SITE = {
 	name: 'Wilfried AGO | Frontend Developer',
 
 	origin: 'https://wilfriedago.me',
-	basePathname: '/astrowind',
+	basePathname: '/',
 
 	title: 'Wilfried AGO | Frontend Developer',
 	description: "I'm a Frontend Developer based in Cotonou, Benin. I'm passionate about web development and I love to learn new things.",
