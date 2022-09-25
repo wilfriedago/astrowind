@@ -8,7 +8,7 @@ export const SITE = {
 	description: "I'm a Frontend Developer based in Cotonou, Benin. I'm passionate about web development and I love to learn new things.",
 
 	googleAnalyticsId: '', // or "G-XXXXXXXXXX",
-	googleSiteVerificationId: '',
+	googleSiteVerificationId: 'e7KbvzQ5B8kgpC0l7rXdiWbH53p6z0NBg80H9T6jWlQ',
 };
 
 export const BLOG = {

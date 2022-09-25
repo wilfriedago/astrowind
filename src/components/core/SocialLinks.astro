@@ -1,17 +1,17 @@
 ---
-export interface Props {
-	links: { name: string; url: string }[];
-}
+import { SOCIALS } from '~/config.mjs';
 
-const { links } = Astro.props as Props;
+const { disabled, links } = SOCIALS;
 ---
 
-<div class="fixed z-40 bottom-10 left-16">
-	{
-		links.map((link) => (
-			<a href={link.url} class="mr-3 hover:underline text-xs font-medium">
-				{link.name}
-			</a>
-		))
-	}
-</div>
+{
+	!disabled && (
+		<div class="fixed z-40 bottom-10 left-16">
+			{links.map((link) => (
+				<a href={link.url} class="mr-3 hover:underline text-xs font-medium">
+					{link.name}
+				</a>
+			))}
+		</div>
+	)
+}

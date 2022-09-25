@@ -1,11 +1,21 @@
 ---
+export interface Props {
+	id: string;
+	title?: string;
+	description?: string;
+	hasHeader: boolean;
+}
+
+const { id, title, description, hasHeader } = Astro.props as Props;
 ---
 
-<div class="mx-auto max-w-5xl h-3/4 flex flex-col lg:items-start items-center justify-center">
-	<small class="font-semibold">Introduction</small>
-	<h1 class="text-5xl text-center lg:text-start font-semibold my-6">codes & designs.</h1>
-	<p class="text-xs text-center lg:text-start font-medium leading-5 tracking-wider lg:w-2/3 w-full">
-		Hi, I'm <a href="https://twitter.com/wilfriedago_">Will</a>. A passionate Graphic Designer and Front-end Developer
-		based in Cotonou, Benin focused on crafting clean, user‑friendly experiences and of course human readable code.
-	</p>
-</div>
+<section id={id} class="panel h-[90vh] sm:h-screen px-8">
+	<div class="mx-auto max-w-5xl h-3/4 flex flex-col lg:items-start items-center justify-center">
+		<small class="font-semibold">Introduction</small>
+		<h1 class="text-5xl text-center lg:text-start font-semibold my-6">codes & designs.</h1>
+		<p class="text-xs text-center lg:text-start font-medium leading-5 tracking-wider lg:w-2/3 w-full">
+			Hi, I'm <a href="https://twitter.com/wilfriedago_">Will</a>. A passionate Graphic Designer and Front-end Developer
+			based in Cotonou, Benin focused on crafting clean, user‑friendly experiences and of course human readable code.
+		</p>
+	</div>
+</section>

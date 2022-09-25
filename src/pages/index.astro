@@ -1,5 +1,5 @@
 ---
-import { SITE, SOCIALS } from '~/config.mjs';
+import { SITE } from '~/config.mjs';
 import { getCanonical, getHomePermalink } from '~/utils/permalinks';
 
 import About from '~/components/containers/About.astro';
@@ -10,6 +10,10 @@ import Pagination from '~/components/core/Pagination.astro';
 import Portfolio from '~/components/containers/Portfolio.astro';
 import Section from '~/components/widgets/Section.astro';
 import SocialLinks from '~/components/core/SocialLinks.astro';
+import AboutSection from '~/components/containers/AboutSection.astro';
+import HeroSection from '~/components/containers/HeroSection.astro';
+import PortfolioSection from '~/components/containers/PortfolioSection.astro';
+import ContactSection from '~/components/containers/ContactSection.astro';
 
 const meta = {
 	title: SITE.title,
@@ -53,6 +57,12 @@ const sections = [
 			</Section>
 		))
 	}
+
+	<HeroSection />
+	<PortfolioSection />
+	<AboutSection />
+	<ContactSection />
+
 	<Pagination />
-	<SocialLinks links={!SOCIALS.disabled ? SOCIALS.links : []} />
+	<SocialLinks />
 </Layout>
