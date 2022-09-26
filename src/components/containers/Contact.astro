@@ -1,2 +1,26 @@
 ---
+import { CONTACT } from '~/config.mjs';
+
+import SectionLayout from '~/layouts/SectionLayout.astro';
+import ContactForm from '~/components/widgets/ContactForm.astro';
+
+const { email, formspreeEndpoint } = CONTACT;
 ---
+
+<SectionLayout id="contact">
+	<div class="mx-auto max-w-5xl h-3/4 flex flex-col sm:flex-row">
+		<div class="w-auto">
+			<h1 class="text-5xl text-center lg:text-start font-semibold my-6">Get in touch</h1>
+			<p class="text-center lg:text-start text-sm mb-6 sm:w-1/2">
+				I'm always open to new opportunities and challenges. If you have any questions or just want to say hi, feel free
+				to contact me.
+			</p>
+			<h5>
+				<a href={`mailto:${email}`} class="text-center lg:text-start text-sm mb-6 sm:w-1/2">
+					{email}
+				</a>
+			</h5>
+		</div>
+		<ContactForm actionUrl={formspreeEndpoint} />
+	</div>
+</SectionLayout>
