@@ -5,10 +5,99 @@ export const SITE = {
 	basePathname: '/',
 
 	title: 'Wilfried AGO | Frontend Developer',
-	description: "I'm a Frontend Developer based in Cotonou, Benin. I'm passionate about web development and I love to learn new things.",
+	description:
+		"I'm a Frontend Developer based in Cotonou, Benin. I'm passionate about web development and I love to learn new things.",
 
 	googleAnalyticsId: '', // or "G-XXXXXXXXXX",
 	googleSiteVerificationId: 'e7KbvzQ5B8kgpC0l7rXdiWbH53p6z0NBg80H9T6jWlQ',
+};
+
+export const CONFIG = {
+	// If you want to use the dark mode, set this to true
+	darkMode: true,
+};
+
+export const CONTACT = {
+	email: 'wilfriedago@pm.me',
+	formspreeEndpoint: 'https://formspree.io/f/xeqdgzrr',
+};
+
+export const PROJECTS = {
+	projectsPerPage: 3,
+	list: [
+		{
+			id: '1',
+			title: 'Portfolio Website',
+			description: 'My personal portfolio',
+			image: '/images/portfolio.png',
+			technologies: ['Next.js', 'Tailwind CSS'],
+			links: [
+				{
+					name: 'Github',
+					url: 'https://github.com/wilfriedago/portfolio',
+				},
+				{
+					name: 'Website',
+					url: 'https://wilfriedago.me',
+				},
+			],
+		},
+		{
+			id: '2',
+			title: 'The Weather App',
+			description: 'A weather app built with Angular',
+			image: '/images/portfolio.png',
+			technologies: ['Next.js', 'Tailwind CSS'],
+			links: [
+				{
+					name: 'Github',
+					url: 'https://github.com/wilfriedago/weather-app',
+				},
+				{
+					name: 'Website',
+					url: '',
+				},
+			],
+		},
+		{
+			id: '3',
+			title: 'Les Editions du Flamboyant',
+			description: 'Booking selling website',
+			image: '/images/portfolio.png',
+			technologies: ['Next.js', 'Tailwind CSS'],
+			links: [
+				{
+					name: 'Github',
+					url: '',
+				},
+				{
+					name: 'Website',
+					url: '',
+				},
+			],
+		},
+	],
+};
+
+export const SOCIALS = {
+	links: [
+		{
+			name: 'Twitter',
+			url: 'https://twitter.com/wilfriedago_',
+		},
+		{
+			name: 'Github',
+			url: 'https://github.com/wilfriedago',
+		},
+		{
+			name: 'LinkedIn',
+			url: 'https://www.linkedin.com/in/wilfriedago/',
+		},
+		{
+			name: 'Instagram',
+			url: 'https://www.instagram.com/wilfriedago_/',
+		},
+	],
 };
 
 export const BLOG = {
@@ -34,89 +123,4 @@ export const BLOG = {
 		disabled: false,
 		pathname: 'tag', // set empty to change from /tag/some-tag to /some-tag
 	},
-};
-
-export const SOCIALS = {
-	disabled: false,
-	links: [
-		{
-			name: 'Twitter',
-			url: 'https://twitter.com/wilfriedago_',
-		},
-		{
-			name: 'Github',
-			url: 'https://github.com/wilfriedago',
-		},
-		{
-			name: 'LinkedIn',
-			url: 'https://www.linkedin.com/in/wilfriedago/',
-		},
-		{
-			name: 'Instagram',
-			url: 'https://www.instagram.com/wilfriedago_/',
-		},
-	],
-};
-
-export const CONTACT = {
-	disabled: false,
-	email: '',
-};
-
-export const PROJECTS = {
-	disabled: false,
-	projectsPerPage: 3,
-	list: [
-		{
-			id: '1',
-			title: 'Portfolio',
-			description: 'My personal portfolio',
-			image: '/images/portfolio.png',
-			technologies: ['Next.js', 'Tailwind CSS'],
-			links: [
-				{
-					name: 'Github',
-					url: '',
-				},
-				{
-					name: 'Website',
-					url: '',
-				},
-			],
-		},
-		{
-			id: '2',
-			title: 'Weather App',
-			description: 'My personal portfolio',
-			image: '/images/portfolio.png',
-			technologies: ['Next.js', 'Tailwind CSS'],
-			links: [
-				{
-					name: 'Github',
-					url: '',
-				},
-				{
-					name: 'Website',
-					url: '',
-				},
-			],
-		},
-		{
-			id: '3',
-			title: 'Les Editions du Flamboyant',
-			description: 'Booking selling website',
-			image: '/images/portfolio.png',
-			technologies: ['Next.js', 'Tailwind CSS'],
-			links: [
-				{
-					name: 'Github',
-					url: '',
-				},
-				{
-					name: 'Website',
-					url: '',
-				}
-			],
-		},
-	]
 };
