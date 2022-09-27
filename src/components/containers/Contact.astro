@@ -2,25 +2,30 @@
 import { CONTACT } from '~/config.mjs';
 
 import SectionLayout from '~/layouts/SectionLayout.astro';
+
 import ContactForm from '~/components/widgets/ContactForm.astro';
+import SocialLinks from '~/components/widgets/SocialLinks.astro';
 
 const { email, formspreeEndpoint } = CONTACT;
 ---
 
 <SectionLayout id="contact">
 	<div class="mx-auto max-w-5xl h-3/4 flex flex-col sm:flex-row">
-		<div class="w-auto">
-			<h1 class="text-5xl text-center lg:text-start font-semibold my-6">Get in touch</h1>
-			<p class="text-center lg:text-start text-sm mb-6 sm:w-1/2">
+		<div class="basis-full lg:self-center">
+			<h1 class="text-5xl text-center lg:text-start font-bold my-6">Get in touch</h1>
+			<p class="text-center lg:text-start text-sm font-medium tracking-wide mb-20">
 				I'm always open to new opportunities and challenges. If you have any questions or just want to say hi, feel free
 				to contact me.
 			</p>
-			<h5>
-				<a href={`mailto:${email}`} class="text-center lg:text-start text-sm mb-6 sm:w-1/2">
+			<p class="mb-20">
+				<a href={`mailto:${email}`} class="text-center lg:text-start text-3xl font-semibold">
 					{email}
 				</a>
-			</h5>
+			</p>
+			<SocialLinks />
 		</div>
-		<ContactForm actionUrl={formspreeEndpoint} />
+		<div class="basis-full lg:self-center mt-10 lg:mt-0 lg:ml-28">
+			<ContactForm actionUrl={formspreeEndpoint} />
+		</div>
 	</div>
 </SectionLayout>

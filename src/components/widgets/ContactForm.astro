@@ -7,6 +7,9 @@ const { actionUrl } = Astro.props as Props;
 ---
 
 <script>
+	import { saveStorage, loadStorage } from '~/utils/helpers';
+	const storage = loadStorage();
+
 	/*========= CONTACT FORM =========*/
 	const form = document.getElementById('contact-form') as HTMLFormElement;
 	const actionUrl = form.action;
@@ -17,11 +20,16 @@ const { actionUrl } = Astro.props as Props;
 
 			const formData = new FormData(form);
 			postFormData(formData).then(() => {
+				// hide form
 				form.reset();
 				form.classList.toggle('hidden');
 
+				// show success message
 				const contactFormSuccess = document.getElementById('contact-form-success');
 				if (contactFormSuccess != null) contactFormSuccess.classList.toggle('hidden');
+
+				// save success state in local storage
+				saveStorage({ ...storage, contactFormSuccess: true });
 			});
 		}
 	};
@@ -38,170 +46,174 @@ const { actionUrl } = Astro.props as Props;
 		});
 	};
 
+	if (storage.contactFormSuccess) handleFormSubmit({} as SubmitEvent as any);
+
 	if (form != null) form.addEventListener('submit', handleFormSubmit);
 </script>
 
-<div class="w-full">
-	<div id="contact-form-success" class="hidden">
-		<h2 class="font-display font-bold text-brand lg:text-xl uppercase mb-4">Thanks !</h2>
-		<h3 class="font-display font-bold text-4xl lg:text-5xl mb-8">I'll be in touch with you soon...</h3>
-		<img src="/assets/contact.svg" alt="A flying paper plane" class="max-w-[768px]" />
-	</div>
+<div id="contact-form-success" class="hidden">
+	<h2 class="font-bold lg:text-xl uppercase mb-4">Thanks for contacting me !</h2>
+	<h3 class="font-bold text-4xl lg:text-5xl mb-8">I'll be in touch with you soon...</h3>
+	<img src="/contact.svg" alt="A flying paper plane" class="max-w-[768px]" />
+</div>
 
-	<!-- form -->
-	<form id="contact-form" action={actionUrl} method="POST">
-		<!-- name input -->
-		<label for="form-name" class="block mb-2 text-sm">Name</label>
-		<div class="relative mt-1 mb-12">
-			<div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-				<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 opacity-60" viewBox="0 0 24 24" fill="currentColor"
-					><path
-						d="M7.5 6.5C7.5 8.981 9.519 11 12 11s4.5-2.019 4.5-4.5S14.481 2 12 2 7.5 4.019 7.5 6.5zM20 21h1v-1c0-3.859-3.141-7-7-7h-4c-3.86 0-7 3.141-7 7v1h17z"
-					></path>
-				</svg>
-			</div>
-
-			<input
-				type="text"
-				id="form-name"
-				name="name"
-				maxlength={40}
-				oninput="this.setCustomValidity('')"
-				oninvalid="this.setCustomValidity('Name is empty.')"
-				onclick="document.getElementById('form-name').classList.add('peer'); document.getElementById('form-name').classList.add('invalid:border-alert-red');"
-				required
-				class="bg-transparent border-2 border-neutrals-500 block w-full pl-10 pr-10 p-2.5 focus:ring-none focus:border-primary-500 focus:outline-none transition-colors duration-300 ease-in-out peer"
-			/>
-
-			<!-- validation displays -->
-			<div class="flex absolute inset-y-0 right-0 items-center pr-3 pointer-events-none invisible peer-valid:visible">
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					class="w-5 h-5 text-success-cyan"
-					viewBox="0 0 20 20"
-					fill="currentColor"
-				>
-					<path
-						fill-rule="evenodd"
-						d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-						clip-rule="evenodd"></path>
-				</svg>
-			</div>
-			<div class="flex absolute inset-y-0 right-0 items-center pr-3 pointer-events-none invisible peer-invalid:visible">
-				<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-alert-red" viewBox="0 0 20 20" fill="currentColor">
-					<path
-						fill-rule="evenodd"
-						d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-						clip-rule="evenodd"></path>
-				</svg>
-			</div>
-			<span class="absolute text-xs text-alert-red mt-[0.4rem] invisible peer-invalid:visible">Name is empty.</span>
-		</div>
-
-		<!-- email input -->
-		<label for="form-email" class="block mb-2 text-sm">Email</label>
-		<div class="relative mt-1 mb-12">
-			<div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-				<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 opacity-60" viewBox="0 0 20 20" fill="currentColor"
-					><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path
-						d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
-				</svg>
-			</div>
-
-			<input
-				type="email"
-				id="form-email"
-				name="email"
-				maxlength={40}
-				oninput="this.setCustomValidity('')"
-				oninvalid="this.setCustomValidity('Email is empty or invalid.')"
-				onclick="document.getElementById('form-email').classList.add('peer'); document.getElementById('form-email').classList.add('invalid:border-alert-red');"
-				pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
-				required
-				class="bg-neutrals-700 border-[1.5px] border-neutrals-500 rounded-md block w-full pl-10 p-2.5 focus:ring-none focus:border-brand focus:outline-none"
-			/>
-
-			<!-- validation displays -->
-			<div class="flex absolute inset-y-0 right-0 items-center pr-3 pointer-events-none invisible peer-valid:visible">
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					class="w-5 h-5 text-success-cyan"
-					viewBox="0 0 20 20"
-					fill="currentColor"
-				>
-					<path
-						fill-rule="evenodd"
-						d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-						clip-rule="evenodd"></path>
-				</svg>
-			</div>
-			<div class="flex absolute inset-y-0 right-0 items-center pr-3 pointer-events-none invisible peer-invalid:visible">
-				<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-alert-red" viewBox="0 0 20 20" fill="currentColor">
-					<path
-						fill-rule="evenodd"
-						d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-						clip-rule="evenodd"></path>
-				</svg>
-			</div>
-			<span class="absolute text-xs text-alert-red mt-[0.4rem] invisible peer-invalid:visible"
-				>Email is empty or invalid.</span
-			>
-		</div>
-
-		<!-- message textarea -->
-		<label for="form-message" class="block mb-2 text-sm">Message</label>
-		<div class="relative mt-1 mb-12">
-			<textarea
-				id="form-message"
-				name="message"
-				rows={4}
-				oninput="this.setCustomValidity('')"
-				oninvalid="this.setCustomValidity('Message is empty.')"
-				onclick="document.getElementById('form-message').classList.add('peer'); document.getElementById('form-message').classList.add('invalid:border-alert-red');"
-				required
-				class="block p-2.5 w-full bg-neutrals-700 rounded-lg border border-neutrals-500 focus:ring-none focus:border-brand focus:outline-none"
-			></textarea>
-
-			<!-- validation displays -->
-			<div class="flex absolute inset-y-0 right-0 items-center pr-3 pointer-events-none invisible peer-valid:visible">
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					class="w-5 h-5 text-success-cyan"
-					viewBox="0 0 20 20"
-					fill="currentColor"
-				>
-					<path
-						fill-rule="evenodd"
-						d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-						clip-rule="evenodd"></path>
-				</svg>
-			</div>
-			<div class="flex absolute inset-y-0 right-0 items-center pr-3 pointer-events-none invisible peer-invalid:visible">
-				<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-alert-red" viewBox="0 0 20 20" fill="currentColor">
-					<path
-						fill-rule="evenodd"
-						d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-						clip-rule="evenodd"></path>
-				</svg>
-			</div>
-			<span class="absolute text-xs text-alert-red mt-[0.4rem] invisible peer-invalid:visible">Message is empty.</span>
-		</div>
-
-		<!-- submit button -->
-		<button
-			type="submit"
-			class="px-5 py-2 border-2 border-neutrals-50 bg-neutrals-50 text-neutrals-900 bg-[length:140%] bg-no-repeat bg-[position:400%] hover:bg-[position:50%] hover:text-neutrals-50 transition-all duration-500 flex items-center"
-			style="background-image: url('/assets/button-dark.svg')"
-		>
-			Hit me up <svg
-				xmlns="http://www.w3.org/2000/svg"
-				class="w-5 h-5 inline-block ml-2"
-				viewBox="0 0 24 24"
-				fill="currentColor"
+<form id="contact-form" action={actionUrl} method="POST">
+	<!-- name input -->
+	<label for="form-name" class="block mb-2 text-sm">Name</label>
+	<div class="relative mb-10">
+		<div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+			<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 opacity-60" viewBox="0 0 24 24" fill="currentColor"
 				><path
-					d="M20.563 3.34a1.002 1.002 0 0 0-.989-.079l-17 8a1 1 0 0 0 .026 1.821L8 15.445v6.722l5.836-4.168 4.764 2.084a1 1 0 0 0 1.399-.85l1-15a1.005 1.005 0 0 0-.436-.893zm-2.466 14.34-5.269-2.306L16 9.167l-7.649 4.25-2.932-1.283 13.471-6.34-.793 11.886z"
+					d="M7.5 6.5C7.5 8.981 9.519 11 12 11s4.5-2.019 4.5-4.5S14.481 2 12 2 7.5 4.019 7.5 6.5zM20 21h1v-1c0-3.859-3.141-7-7-7h-4c-3.86 0-7 3.141-7 7v1h17z"
 				></path>
 			</svg>
-		</button>
-	</form>
-</div>
+		</div>
+
+		<input
+			type="text"
+			id="form-name"
+			name="name"
+			maxlength={40}
+			oninput="this.setCustomValidity('')"
+			oninvalid="this.setCustomValidity('Name is empty.')"
+			onblur="document.getElementById('form-name').classList.add('peer'); document.getElementById('form-name').classList.add('invalid:border-alert-red');"
+			required
+			class="bg-transparent border-[1.5px] border-gray-500 rounded-md block w-full pl-10 pr-10 p-2.5 focus:ring-none focus:border-primary-500 focus:outline-none"
+		/>
+
+		<!-- validation displays -->
+		<div class="flex absolute inset-y-0 right-0 items-center pr-3 pointer-events-none invisible peer-valid:visible">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				class="w-5 h-5 dark:text-green-400 text-green-500"
+				viewBox="0 0 20 20"
+				fill="currentColor"
+			>
+				<path
+					fill-rule="evenodd"
+					d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+					clip-rule="evenodd"></path>
+			</svg>
+		</div>
+		<div class="flex absolute inset-y-0 right-0 items-center pr-3 pointer-events-none invisible peer-invalid:visible">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				class="w-5 h-5 dark:text-red-400 text-red-500"
+				viewBox="0 0 20 20"
+				fill="currentColor"
+			>
+				<path
+					fill-rule="evenodd"
+					d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+					clip-rule="evenodd"></path>
+			</svg>
+		</div>
+		<span class="absolute text-xs text-red-400 mt-[0.4rem] invisible peer-invalid:visible">Name is empty.</span>
+	</div>
+
+	<!-- email input -->
+	<label for="form-email" class="block mb-2 text-sm">Email</label>
+	<div class="relative mb-10">
+		<div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+			<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 opacity-60" viewBox="0 0 20 20" fill="currentColor"
+				><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path
+					d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+			</svg>
+		</div>
+
+		<input
+			type="email"
+			id="form-email"
+			name="email"
+			maxlength={40}
+			oninput="this.setCustomValidity('')"
+			oninvalid="this.setCustomValidity('Email is empty or invalid.')"
+			onblur="document.getElementById('form-email').classList.add('peer'); document.getElementById('form-email').classList.add('invalid:border-alert-red');"
+			pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+			required
+			class="bg-transparent border-[1.5px] border-gray-500 rounded-md block w-full pl-10 p-2.5 focus:ring-none focus:border-primary-500 focus:outline-none"
+		/>
+
+		<!-- validation displays -->
+		<div class="flex absolute inset-y-0 right-0 items-center pr-3 pointer-events-none invisible peer-valid:visible">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				class="w-5 h-5 dark:text-green-400 text-green-500"
+				viewBox="0 0 20 20"
+				fill="currentColor"
+			>
+				<path
+					fill-rule="evenodd"
+					d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+					clip-rule="evenodd"></path>
+			</svg>
+		</div>
+		<div class="flex absolute inset-y-0 right-0 items-center pr-3 pointer-events-none invisible peer-invalid:visible">
+			<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+				<path
+					fill-rule="evenodd"
+					d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+					clip-rule="evenodd"></path>
+			</svg>
+		</div>
+		<span class="absolute text-xs text-red-400 mt-[0.4rem] invisible peer-invalid:visible"
+			>Email is empty or invalid.</span
+		>
+	</div>
+
+	<!-- message textarea -->
+	<label for="form-message" class="block mb-2 text-sm">Message</label>
+	<div class="relative mb-10">
+		<textarea
+			id="form-message"
+			name="message"
+			rows={4}
+			oninput="this.setCustomValidity('')"
+			oninvalid="this.setCustomValidity('Message is empty.')"
+			onblur="document.getElementById('form-message').classList.add('peer'); document.getElementById('form-message').classList.add('invalid:border-alert-red');"
+			required
+			class="block p-2.5 w-full bg-transparent rounded-lg border border-gray-500 focus:ring-none focus:border-brand focus:outline-none"
+		></textarea>
+
+		<!-- validation displays -->
+		<div class="flex absolute inset-y-0 right-0 items-center pr-3 pointer-events-none invisible peer-valid:visible">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				class="w-5 h-5 dark:text-green-400 text-green-500"
+				viewBox="0 0 20 20"
+				fill="currentColor"
+			>
+				<path
+					fill-rule="evenodd"
+					d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+					clip-rule="evenodd"></path>
+			</svg>
+		</div>
+		<div class="flex absolute inset-y-0 right-0 items-center pr-3 pointer-events-none invisible peer-invalid:visible">
+			<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+				<path
+					fill-rule="evenodd"
+					d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+					clip-rule="evenodd"></path>
+			</svg>
+		</div>
+		<span class="absolute text-xs text-red-400 mt-[0.4rem] invisible peer-invalid:visible">Message is empty.</span>
+	</div>
+
+	<!-- submit button -->
+	<button
+		type="submit"
+		class="px-5 py-2 border-2 border-neutrals-50 bg-neutrals-50 text-neutrals-900 bg-[length:140%] bg-no-repeat bg-[position:400%] hover:bg-[position:50%] hover:text-neutrals-50 transition-all duration-500 flex items-center"
+		style="background-image: url('/button-dark.svg')"
+	>
+		Hit me up <svg
+			xmlns="http://www.w3.org/2000/svg"
+			class="w-5 h-5 inline-block ml-2"
+			viewBox="0 0 24 24"
+			fill="currentColor"
+			><path
+				d="M20.563 3.34a1.002 1.002 0 0 0-.989-.079l-17 8a1 1 0 0 0 .026 1.821L8 15.445v6.722l5.836-4.168 4.764 2.084a1 1 0 0 0 1.399-.85l1-15a1.005 1.005 0 0 0-.436-.893zm-2.466 14.34-5.269-2.306L16 9.167l-7.649 4.25-2.932-1.283 13.471-6.34-.793 11.886z"
+			></path>
+		</svg>
+	</button>
+</form>
