@@ -1,0 +1,17 @@
+---
+export interface Props {
+	id: string;
+	title?: string;
+	description?: string;
+	hasHeader?: boolean;
+}
+
+import SectionHeader from '~/components/widgets/SectionHeader.astro';
+
+const { id, title, description, hasHeader = false } = Astro.props as Props;
+---
+
+<section id={id} class="h-[90vh] sm:h-screen px-8">
+	{hasHeader && <SectionHeader title={title} description={description} />}
+	<slot />
+</section>
