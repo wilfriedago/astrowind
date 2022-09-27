@@ -1,58 +1,37 @@
 ---
-import { SITE, SOCIALS } from '~/config.mjs';
+import { SITE } from '~/config.mjs';
 import { getCanonical, getHomePermalink } from '~/utils/permalinks';
 
-import About from '~/components/containers/About.astro';
-import Home from '~/components/containers/Home.astro';
-import Contact from '~/components/containers/Contact.astro';
 import Layout from '~/layouts/PageLayout.astro';
-import Pagination from '~/components/core/Pagination.astro';
+
+import Hero from '~/components/containers/Hero.astro';
 import Portfolio from '~/components/containers/Portfolio.astro';
-import Section from '~/components/widgets/Section.astro';
-import SocialLinks from '~/components/core/SocialLinks.astro';
+import About from '~/components/containers/About.astro';
+import Contact from '~/components/containers/Contact.astro';
+
+import Pagination from '~/components/widgets/Pagination.astro';
+import SocialLinks from '~/components/widgets/SocialLinks.astro';
 
 const meta = {
 	title: SITE.title,
 	description: SITE.description,
 	canonical: getCanonical(getHomePermalink()),
 };
-
-const sections = [
-	{
-		id: 'home',
-		hasHeader: false,
-		component: Home,
-	},
-	{
-		id: 'portfolio',
-		title: 'Portfolio',
-		description: 'Showcasing my recent work',
-		hasHeader: true,
-		component: Portfolio,
-	},
-	{
-		id: 'about',
-		title: 'About Me',
-		description: 'Learn more about me',
-		hasHeader: true,
-		component: About,
-	},
-	{
-		id: 'contact',
-		hasHeader: false,
-		component: Contact,
-	},
-];
 ---
 
 <Layout {meta}>
-	{
-		sections.map((section) => (
-			<Section {...section}>
-				<section.component />
-			</Section>
-		))
-	}
+	<!--======= HERO ========-->
+	<Hero />
+
+	<!--======= PORTFOLIO ========-->
+	<Portfolio />
+
+	<!--======= ABOUT ========-->
+	<About />
+
+	<!--======= CONTACT ========-->
+	<Contact />
+
 	<Pagination />
-	<SocialLinks links={!SOCIALS.disabled ? SOCIALS.links : []} />
+	<SocialLinks />
 </Layout>

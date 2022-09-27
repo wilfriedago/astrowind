@@ -1,0 +1,18 @@
+---
+import { SOCIALS } from '~/config.mjs';
+
+import SectionLayout from '~/layouts/SectionLayout.astro';
+
+const twitterUrl = SOCIALS.links[0].url;
+---
+
+<SectionLayout id="hero">
+	<div class="mx-auto max-w-5xl h-3/4 flex flex-col lg:items-start items-center justify-center">
+		<small class="font-semibold">Introduction</small>
+		<h1 class="text-5xl text-center lg:text-start font-semibold my-6">codes & designs.</h1>
+		<p class="text-xs text-center lg:text-start font-medium leading-5 tracking-wider lg:w-2/3 w-full">
+			Hi, I'm <a href={twitterUrl}>Will</a>. A passionate Graphic Designer and Front-end Developer based in Cotonou,
+			Benin focused on crafting clean, user‑friendly experiences and of course human readable code.
+		</p>
+	</div>
+</SectionLayout>

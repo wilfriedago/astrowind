@@ -1,11 +1,30 @@
 ---
-import { PROJECTS as projects } from '~/config.mjs';
+import { PROJECTS } from '~/config.mjs';
+
+import SectionLayout from '~/layouts/SectionLayout.astro';
+
 import ProjectCard from '~/components/widgets/ProjectCard.astro';
+
+const { disabled, list, projectsPerPage } = PROJECTS;
 ---
 
-<div class="my-14 flex flex-col gap-y-6 place-items-center">
-	{projects.list.map((project) => <ProjectCard {...project} />)}
-</div>
-<div class="flex flex-col place-items-center">
-	<a class="text-gray-400 text-xs font-medium uppercase" href="/projects" title="All Posts">See more works →</a>
-</div>
+<SectionLayout id="Portfolio" title="Portfolio" description="Showcasing my recent works" hasHeader={true}>
+	{
+		!disabled && (
+			<div class="my-14 flex flex-col gap-y-6 place-items-center">
+				{list.slice(0, projectsPerPage).map((project) => (
+					<ProjectCard {...project} />
+				))}
+			</div>
+		)
+	}
+	{
+		list.length > projectsPerPage && (
+			<div class="flex flex-col place-items-center hover:scale-105 transition-transform duration-300 ease-out">
+				<a class="text-gray-400 text-xs font-medium uppercase" href="/projects" title="View all my projects">
+					See more works →
+				</a>
+			</div>
+		)
+	}
+</SectionLayout>

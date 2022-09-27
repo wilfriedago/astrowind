@@ -1,4 +1,6 @@
 ---
+import Picture from '../core/Picture.astro';
+
 export interface Props {
 	id: string;
 	title?: string;
@@ -14,6 +16,23 @@ export interface Props {
 const { id, title, description, image, technologies, links } = Astro.props as Props;
 ---
 
-<article id={id} class="p-6 flex flex-col md:flex-row items-center gap-x-8 rounded-md bg-white w-4/5 cursor-pointer">
-	<h3 class="text-gray-900 text-xl leading-tight font-medium mb-2">{title}</h3>
+<article
+	id={id}
+	class="p-6 w-4/5 max-w-4xl h-20 flex flex-row items-center rounded ring-2 ring-gray-700 cursor-pointer opacity-80 hover:opacity-100 scale-100 hover:scale-105 hover:shadow-xl transition-transform duration-300 ease-in-out"
+>
+	<span class="h-0.5 w-14 mx-3 rounded-full bg-gray-400 hidden sm:block"></span>
+	<span class="text-xs mx-3 font-bold">{id === '10' ? id : `0${id}`}</span>
+	<h3 class="mx-3 text-sm font-bold leading-tight truncate">{title}</h3>
+	<div
+		class="bg-gradient-to-r from-[#1a1e28] via-[#1a1e28f9] to-[#1a1e2866] hover:via-[#1a1e28cc] hover:to-transparent w-full h-full absolute -z-10 inset-0"
+	>
+	</div>
+	<Picture
+		src={import('~/assets/images/hero.jpg')}
+		class="absolute inset-0 -z-20 object-cover object-center w-full h-full"
+		widths={[400, 768]}
+		sizes=" (max-width: 767px) 400px, 768px"
+		alt="Hero Image"
+		aspectRatio="16:9"
+	/>
 </article>

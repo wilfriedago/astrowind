@@ -1,12 +1,12 @@
 ---
 import { SITE } from '~/config.mjs';
-
 import Layout from '~/layouts/PageLayout.astro';
 import Error404 from '~/components/widgets/Error404.astro';
 
-const title = `Error 404 — ${SITE.name}`;
+const title = `Error 404 | ${SITE.name}`;
 ---
 
 <Layout meta={{ title }}>
+	<!--======= 404 - PAGE NOT FOUND ========-->
 	<Error404 />
 </Layout>

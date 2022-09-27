@@ -1,0 +1,20 @@
+---
+export interface Props {
+	title: string;
+	description: string;
+}
+
+const { title, description } = Astro.props as Props;
+---
+
+<header class="flex flex-col items-center">
+	<span
+		class="absolute overflow-hidden m-0 -z-10 text-5xl sm:text-8xl font-extrabold uppercase opacity-40 dark:opacity-20 bg-clip-text text-transparent bg-gradient-to-r from-primary-500 to-secondary-500"
+	>
+		{title}
+	</span>
+	<h2 class="text-4xl sm:text-5xl font-semibold mb-5 sm:my-9 opacity-80 sm:opacity-90 before:content-['']">
+		{title}
+	</h2>
+	<p class="text-xs font-semibold tracking-widest opacity-90">{description}</p>
+</header>

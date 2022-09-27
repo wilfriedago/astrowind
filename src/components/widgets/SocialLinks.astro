@@ -1,0 +1,17 @@
+---
+import { SOCIALS } from '~/config.mjs';
+
+const { disabled, links } = SOCIALS;
+---
+
+{
+	!disabled && links && Array.isArray(links) && (
+		<div class="fixed z-40 bottom-10 left-16">
+			{links.map((link) => (
+				<a href={link.url} class="mr-3 hover:underline text-xs font-medium">
+					{link.name}
+				</a>
+			))}
+		</div>
+	)
+}
