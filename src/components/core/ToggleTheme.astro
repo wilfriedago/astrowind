@@ -2,13 +2,14 @@
 const {
 	label = 'Toggle between Dark and Light mode',
 	class:
-		className = 'theme-toggle ml-1.5 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-full text-sm p-2.5 inline-flex items-center transition',
+		className = 'swap swap-rotate ml-1.5 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-full text-sm transition',
 } = Astro.props;
 ---
 
 <script>
 	import { attachEvent } from '~/utils/helpers';
 
+	const toggleTrigger = document.getElementById('theme-toggle') as HTMLLabelElement;
 	const storageKey = 'theme-preference';
 
 	const toggleTheme = () => {
@@ -38,17 +39,18 @@ const {
 
 		document.firstElementChild.classList.toggle('dark', theme.value === 'dark');
 
-		document.querySelector('#theme-toggle')?.setAttribute('aria-label', theme.value);
+		toggleTrigger?.setAttribute('aria-label', theme.value);
+
+		theme.value === 'light'
+			? toggleTrigger.classList.add('swap-active')
+			: toggleTrigger.classList.remove('swap-active');
 	};
 
 	// set early so no page flashes / CSS is made aware
 	reflectPreference();
 
-	// set on load so screen readers can see latest value on the button
-	window.onload = () => {
-		reflectPreference();
-		attachEvent('[data-aw-toggle-color-scheme]', 'click', toggleTheme);
-	};
+	// toggle on click
+	attachEvent('[data-aw-toggle-color-scheme]', 'click', toggleTheme);
 
 	// sync with system changes
 	window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ({ matches: isDark }) => {
@@ -57,32 +59,25 @@ const {
 	});
 </script>
 
-<button
+<label
 	id="theme-toggle"
-	type="button"
 	class={className}
 	title={label}
 	aria-label={label}
 	aria-live="polite"
 	data-aw-toggle-color-scheme
 >
-	<svg
-		xmlns="http://www.w3.org/2000/svg"
-		aria-hidden="true"
-		width="1em"
-		height="1em"
-		fill="currentColor"
-		class="theme-toggle__expand"
-		viewBox="0 0 32 32"
-	>
-		<clipPath id="theme-toggle__expand__cutout">
-			<path d="M0-11h25a1 1 0 0017 13v30H0Z"></path>
-		</clipPath>
-		<g clip-path="url(#theme-toggle__expand__cutout)">
-			<circle cx="16" cy="16" r="8.4"></circle>
-			<path
-				d="M18.3 3.2c0 1.3-1 2.3-2.3 2.3s-2.3-1-2.3-2.3S14.7.9 16 .9s2.3 1 2.3 2.3zm-4.6 25.6c0-1.3 1-2.3 2.3-2.3s2.3 1 2.3 2.3-1 2.3-2.3 2.3-2.3-1-2.3-2.3zm15.1-10.5c-1.3 0-2.3-1-2.3-2.3s1-2.3 2.3-2.3 2.3 1 2.3 2.3-1 2.3-2.3 2.3zM3.2 13.7c1.3 0 2.3 1 2.3 2.3s-1 2.3-2.3 2.3S.9 17.3.9 16s1-2.3 2.3-2.3zm5.8-7C9 7.9 7.9 9 6.7 9S4.4 8 4.4 6.7s1-2.3 2.3-2.3S9 5.4 9 6.7zm16.3 21c-1.3 0-2.3-1-2.3-2.3s1-2.3 2.3-2.3 2.3 1 2.3 2.3-1 2.3-2.3 2.3zm2.4-21c0 1.3-1 2.3-2.3 2.3S23 7.9 23 6.7s1-2.3 2.3-2.3 2.4 1 2.4 2.3zM6.7 23C8 23 9 24 9 25.3s-1 2.3-2.3 2.3-2.3-1-2.3-2.3 1-2.3 2.3-2.3z"
-			></path>
-		</g>
+	<!-- sun icon -->
+	<svg class="swap-on fill-current w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+		><path
+			d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z"
+		></path>
 	</svg>
-</button>
+
+	<!-- moon icon -->
+	<svg class="swap-off fill-current w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+		><path
+			d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z"
+		></path>
+	</svg>
+</label>
