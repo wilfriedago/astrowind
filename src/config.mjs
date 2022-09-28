@@ -30,7 +30,7 @@ export const PROJECTS = {
 			title: 'Portfolio Website',
 			description: 'My personal portfolio',
 			image: '/images/portfolio.png',
-			technologies: ['Next.js', 'Tailwind CSS'],
+			technologies: ['Astro', 'Vue', 'Tailwind CSS', 'Netlify'],
 			links: [
 				{
 					name: 'Github',
@@ -47,7 +47,7 @@ export const PROJECTS = {
 			title: 'The Weather App',
 			description: 'A weather app built with Angular',
 			image: '/images/portfolio.png',
-			technologies: ['Next.js', 'Tailwind CSS'],
+			technologies: ['Angular', 'Tailwind CSS', 'OpenWeatherMap API', 'IP Geolocation API', 'Unsplash API'],
 			links: [
 				{
 					name: 'Github',
@@ -55,24 +55,20 @@ export const PROJECTS = {
 				},
 				{
 					name: 'Website',
-					url: '',
+					url: 'https://weather.wilfriedago.me',
 				},
 			],
 		},
 		{
 			id: '3',
-			title: 'Les Editions du Flamboyant',
+			title: 'Les Éditions du Flamboyant & Communications',
 			description: 'Booking selling website',
 			image: '/images/portfolio.png',
-			technologies: ['Next.js', 'Tailwind CSS'],
+			technologies: ['Wordpress', 'Woocommerce', 'KKiaPay'],
 			links: [
 				{
-					name: 'Github',
-					url: '',
-				},
-				{
 					name: 'Website',
-					url: '',
+					url: 'https://leseditionsflamboyantcm.com',
 				},
 			],
 		},
@@ -80,6 +76,7 @@ export const PROJECTS = {
 };
 
 export const SOCIALS = {
+	disabled: false,
 	links: [
 		{
 			name: 'Twitter',
