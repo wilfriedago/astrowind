@@ -148,7 +148,7 @@ const { actionUrl } = Astro.props as Props;
 
 <form id="contact-form" action={actionUrl} method="POST">
 	<!-- name input -->
-	<label for="form-name" class="block mb-2 text-sm">Name</label>
+	<label for="form-name" class="block mb-2 text-sm font-semibold">Name</label>
 	<div class="relative mb-10">
 		<div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
 			<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 opacity-60" viewBox="0 0 24 24" fill="currentColor"
@@ -167,7 +167,7 @@ const { actionUrl } = Astro.props as Props;
 			oninvalid="this.setCustomValidity('Name is empty.');"
 			onblur="document.getElementById('form-name').classList.add('peer'); document.getElementById('form-name').classList.add('invalid:border-red-400');"
 			required
-			class="bg-transparent border-[1.5px] border-gray-500 rounded-md block w-full pl-10 pr-10 p-2.5 focus:ring-none focus:border-primary-500 focus:outline-none"
+			class="bg-transparent border-2 border-gray-500 block w-full pl-10 pr-10 p-2.5 focus:ring-none focus:border-primary-500 focus:outline-none"
 		/>
 
 		<!-- validation displays -->
@@ -201,7 +201,7 @@ const { actionUrl } = Astro.props as Props;
 	</div>
 
 	<!-- email input -->
-	<label for="form-email" class="block mb-2 text-sm">Email</label>
+	<label for="form-email" class="block mb-2 text-sm font-semibold">Email</label>
 	<div class="relative mb-10">
 		<div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
 			<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 opacity-60" viewBox="0 0 20 20" fill="currentColor"
@@ -220,7 +220,7 @@ const { actionUrl } = Astro.props as Props;
 			onblur="document.getElementById('form-email').classList.add('peer'); document.getElementById('form-email').classList.add('invalid:border-red-400');"
 			pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
 			required
-			class="bg-transparent border-[1.5px] border-gray-500 rounded-md block w-full pl-10 p-2.5 focus:ring-none focus:border-primary-500 focus:outline-none"
+			class="bg-transparent border-2 border-gray-500 block w-full pl-10 p-2.5 focus:ring-none focus:border-primary-500 focus:outline-none"
 		/>
 
 		<!-- validation displays -->
@@ -251,7 +251,7 @@ const { actionUrl } = Astro.props as Props;
 	</div>
 
 	<!-- message textarea -->
-	<label for="form-message" class="block mb-2 text-sm">Message</label>
+	<label for="form-message" class="block mb-2 text-sm font-semibold">Message</label>
 	<div class="relative mb-10">
 		<textarea
 			id="form-message"
@@ -261,7 +261,7 @@ const { actionUrl } = Astro.props as Props;
 			oninvalid="this.setCustomValidity('Please enter a message.')"
 			onblur="document.getElementById('form-message').classList.add('peer'); document.getElementById('form-message').classList.add('invalid:border-red-400');"
 			required
-			class="block p-2.5 w-full bg-transparent rounded-lg border border-gray-500 focus:ring-none focus:border-brand focus:outline-none"
+			class="block p-2.5 w-full bg-transparent border-2 border-gray-500 focus:ring-none focus:border-brand focus:outline-none"
 		></textarea>
 
 		<!-- validation displays -->
@@ -292,7 +292,7 @@ const { actionUrl } = Astro.props as Props;
 	<!-- submit button -->
 	<button
 		type="submit"
-		class="px-5 py-2 border-2 border-gray-500 bg-neutrals-50 text-neutrals-900 bg-[length:140%] bg-no-repeat bg-[position:400%] hover:bg-[position:50%] hover:text-white transition-all duration-500 flex items-center"
+		class="px-5 py-2 border-2 border-gray-500 bg-neutrals-50 text-neutrals-900 bg-[length:140%] bg-no-repeat bg-[position:400%] hover:bg-[position:50%] hover:text-white transition-all duration-500 flex items-center self-center"
 		style="background-image: url('/button-dark.svg')"
 	>
 		Hit me up <svg

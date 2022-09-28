@@ -3,7 +3,7 @@ import Picture from '../core/Picture.astro';
 
 export interface Props {
 	id: string;
-	title?: string;
+	title: string;
 	description?: string;
 	image?: string;
 	technologies?: string[];
@@ -18,13 +18,13 @@ const { id, title, description, image, technologies, links } = Astro.props as Pr
 
 <article
 	id={id}
-	class="p-6 w-4/5 max-w-4xl h-20 flex flex-row items-center rounded ring-2 ring-gray-700 cursor-pointer opacity-80 hover:opacity-100 scale-100 hover:scale-105 hover:shadow-xl transition-transform duration-300 ease-in-out"
+	class="p-6 w-4/5 max-w-4xl h-20 flex flex-row items-center rounded-sm ring-[1.5px] dark:ring-gray-700 ring-gray-500 shadow cursor-pointer opacity-80 hover:opacity-100 scale-100 hover:scale-105 hover:shadow-xl transition-transform duration-300 ease-in-out"
 >
-	<span class="h-0.5 w-14 mx-3 rounded-full bg-gray-400 hidden sm:block"></span>
+	<span class="h-0.5 w-14 mx-3 rounded-full dark:bg-gray-300 bg-gray-900 hidden sm:block"></span>
 	<span class="text-xs mx-3 font-bold">{id === '10' ? id : `0${id}`}</span>
-	<h3 class="mx-3 text-sm font-bold leading-tight truncate">{title}</h3>
+	<h3 class="mx-3 text-sm font-bold leading-tight truncate text-gray-900 dark:text-gray-100">{title}</h3>
 	<div
-		class="bg-gradient-to-r from-[#1a1e28] via-[#1a1e28f9] to-[#1a1e2866] hover:via-[#1a1e28cc] hover:to-transparent w-full h-full absolute -z-10 inset-0"
+		class="bg-gradient-to-r dark:from-[#1a1e28] from-white dark:via-[#1a1e28f9] to-[#1a1e2866] dark:hover:via-[#1a1e28cc] hover:via-transparent hover:to-transparent w-full h-full absolute -z-10 inset-0"
 	>
 	</div>
 	<Picture
