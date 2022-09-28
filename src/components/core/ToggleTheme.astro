@@ -6,6 +6,57 @@ const {
 } = Astro.props;
 ---
 
+<script>
+	import { attachEvent } from '~/utils/helpers';
+
+	const storageKey = 'theme-preference';
+
+	const toggleTheme = () => {
+		// flip current value
+		theme.value = theme.value === 'light' ? 'dark' : 'light';
+
+		setPreference();
+	};
+
+	const getColorPreference = () => {
+		return (
+			localStorage.getItem(storageKey) || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+		);
+	};
+
+	const setPreference = () => {
+		localStorage.setItem(storageKey, theme.value);
+		reflectPreference();
+	};
+
+	const theme = {
+		value: getColorPreference(),
+	};
+
+	const reflectPreference = () => {
+		document.firstElementChild.setAttribute('data-theme', theme.value);
+
+		document.firstElementChild.classList.toggle('dark', theme.value === 'dark');
+
+		document.querySelector('#theme-toggle')?.setAttribute('aria-label', theme.value);
+	};
+
+	// set early so no page flashes / CSS is made aware
+	reflectPreference();
+
+	// set on load so screen readers can see latest value on the button
+	window.onload = () => {
+		reflectPreference();
+		attachEvent('[data-aw-toggle-color-scheme]', 'click', toggleTheme);
+	};
+
+	// sync with system changes
+	window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ({ matches: isDark }) => {
+		theme.value = isDark ? 'dark' : 'light';
+		setPreference();
+	});
+</script>
+
 <button
 	id="theme-toggle"
 	type="button"

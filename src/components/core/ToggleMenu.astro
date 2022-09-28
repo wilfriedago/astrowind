@@ -10,6 +10,27 @@ const {
 } = Astro.props;
 ---
 
+<script>
+	import { attachEvent } from '~/utils/helpers';
+
+	window.onload = () => {
+		attachEvent('[data-aw-toggle-menu]', 'click', function (elem) {
+			elem.classList.toggle('expanded');
+			document.body.classList.toggle('overflow-hidden');
+			document.getElementById('menu')?.classList.toggle('hidden');
+		});
+	};
+
+	window.onpageshow = function () {
+		const elem = document.querySelector('[data-aw-toggle-menu]');
+		if (elem) {
+			elem.classList.remove('expanded');
+		}
+		document.body.classList.remove('overflow-hidden');
+		document.getElementById('menu')?.classList.add('hidden');
+	};
+</script>
+
 <button type="button" class={className} title={label} aria-label={label} data-aw-toggle-menu>
 	<Icon name={iconName} class={iconClass} optimize={false} />
 </button>
