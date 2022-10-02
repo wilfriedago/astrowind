@@ -15,16 +15,75 @@ export const SITE = {
 export const CONFIG = {
 	// If you want to use the dark mode, set this to true
 	darkMode: true,
+	formspreeEndpoint: import.meta.env.FORMSPREE_ENDPOINT,
 };
 
-export const CONTACT = {
-	email: 'wilfriedago@pm.me',
-	formspreeEndpoint: 'https://formspree.io/f/xeqdgzrr',
-};
-
-export const PROJECTS = {
-	projectsPerPage: 3,
-	list: [
+export const RESUME = {
+	about: {
+		name: 'Wilfried AGO',
+		profession: 'Student | Frontend Developer | UI/UX Designer',
+		summary: 'Detail-oriented graphic designer and front-end developer. I believe that a great design is the result of understanding a problem to its core and solving it with a simple and elegant solution. \n\n Passionate about visual design, web development, and user experience. I looking for an internship or a job as a web developer or UI/UX designer. I am also open to freelance projects. Feel free to contact if you have any questions or if you want to work with me.',
+		contact: {
+			email: 'wilfriedago@pm.me',
+			phone: '+229 62 000 975',
+			address: 'Kouhounou, Cotonou Benin',
+		},
+		socials: [
+			{
+				name: 'Twitter',
+				url: 'https://twitter.com/wilfriedago_',
+			},
+			{
+				name: 'Github',
+				url: 'https://github.com/wilfriedago',
+			},
+			{
+				name: 'LinkedIn',
+				url: 'https://www.linkedin.com/in/wilfriedago/',
+			},
+			{
+				name: 'Instagram',
+				url: 'https://www.instagram.com/wilfriedago_/',
+			},
+		],
+	},
+	skills: {
+		programmingLanguages: ['HTML5 & CSS3', 'JavaScript', 'TypeScript', 'PHP', 'Python', 'Java', 'C', 'SQL'
+		],
+		frameworksAndLibrairies: ['Vue', 'Astro', 'Angular', 'React', 'Laravel', 'Express', 'Bootstrap', 'Tailwind CSS', 'jQuery', 'Axios', 'Sequelize',
+		],
+		toolsAndPlatforms: ['Git', 'Github Actions', 'NPM', 'Yarn', 'Docker', 'Vite', 'Gulp', 'ESLint', 'Prettier', 'Postman', 'Figma', 'Adobe XD', 'Adobe Photoshop', 'Adobe Illustrator', 'Canva', 'Netlify', 'Heroku', 'Firebase', 'Github Pages', 'WordPress', 'Shopify', 'Vercel', 'Hostinger', 'LWS.fr',
+		],
+	},
+	experiences: [
+		{
+			title: 'Frontend Developer',
+			company: 'Freelance',
+			companyLink: 'https://wilfriedago.me',
+			startDate: '2020',
+			endDate: 'Present',
+			description: 'I work as a Frontend Developer at Les Éditions du Flamboyant & Communications. I build and maintain websites and web applications.',
+		},
+	],
+	education: [
+		{
+			title: 'Bachelor of Computer Science',
+			school: 'ESGIS Bénin - Ecole Supérieure de Génie Informatique et des Sciences',
+			schoolLink: 'https://www.esgis.org/',
+			startDate: 'September 2020',
+			endDate: 'Present',
+			description: 'I am currently studying Computer Science at ESGIS Bénin.',
+		},
+		{
+			title: 'Baccalaureate D',
+			school: 'CS Clé de la Réussite',
+			schoolLink: '',
+			startDate: 'October 2015',
+			endDate: 'July 2018',
+			description: 'I studied at CS Clé de la Réussite.',
+		}
+	],
+	projects: [
 		{
 			id: '1',
 			title: 'Portfolio Website',
@@ -64,7 +123,7 @@ export const PROJECTS = {
 			title: 'Les Éditions du Flamboyant & Communications',
 			description: 'Booking selling website',
 			image: '/images/portfolio.png',
-			technologies: ['Wordpress', 'Woocommerce', 'KKiaPay'],
+			technologies: ['WordPress', 'Woocommerce', 'KKiaPay'],
 			links: [
 				{
 					name: 'Website',
@@ -75,26 +134,20 @@ export const PROJECTS = {
 	],
 };
 
+export const CONTACT = {
+	disabled: false,
+	details: RESUME.about.contact,
+};
+
+export const PROJECTS = {
+	disabled: false,
+	projectsPerPage: 3,
+	list: RESUME.projects
+};
+
 export const SOCIALS = {
 	disabled: false,
-	links: [
-		{
-			name: 'Twitter',
-			url: 'https://twitter.com/wilfriedago_',
-		},
-		{
-			name: 'Github',
-			url: 'https://github.com/wilfriedago',
-		},
-		{
-			name: 'LinkedIn',
-			url: 'https://www.linkedin.com/in/wilfriedago/',
-		},
-		{
-			name: 'Instagram',
-			url: 'https://www.instagram.com/wilfriedago_/',
-		},
-	],
+	links: RESUME.about.socials
 };
 
 export const BLOG = {
