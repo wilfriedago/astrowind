@@ -167,7 +167,7 @@ const { actionUrl } = Astro.props as Props;
 			oninvalid="this.setCustomValidity('Name is empty.');"
 			onblur="document.getElementById('form-name').classList.add('peer'); document.getElementById('form-name').classList.add('invalid:border-red-400');"
 			required
-			class="bg-transparent border-2 border-gray-500 block w-full pl-10 pr-10 p-2.5 focus:ring-none focus:border-primary-500 focus:outline-none"
+			class="bg-transparent border-2 border-gray-500 block w-full pl-10 pr-10 p-2.5 focus:ring-none focus:border-primary-500 focus:outline-none rounded"
 		/>
 
 		<!-- validation displays -->
@@ -220,7 +220,7 @@ const { actionUrl } = Astro.props as Props;
 			onblur="document.getElementById('form-email').classList.add('peer'); document.getElementById('form-email').classList.add('invalid:border-red-400');"
 			pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
 			required
-			class="bg-transparent border-2 border-gray-500 block w-full pl-10 p-2.5 focus:ring-none focus:border-primary-500 focus:outline-none"
+			class="bg-transparent border-2 border-gray-500 block w-full pl-10 p-2.5 focus:ring-none focus:border-primary-500 focus:outline-none rounded"
 		/>
 
 		<!-- validation displays -->
@@ -261,7 +261,7 @@ const { actionUrl } = Astro.props as Props;
 			oninvalid="this.setCustomValidity('Please enter a message.')"
 			onblur="document.getElementById('form-message').classList.add('peer'); document.getElementById('form-message').classList.add('invalid:border-red-400');"
 			required
-			class="block p-2.5 w-full bg-transparent border-2 border-gray-500 focus:ring-none focus:border-brand focus:outline-none"
+			class="block p-2.5 w-full bg-transparent border-2 border-gray-500 focus:ring-none focus:border-primary-500 focus:outline-none rounded"
 		></textarea>
 
 		<!-- validation displays -->
@@ -292,7 +292,7 @@ const { actionUrl } = Astro.props as Props;
 	<!-- submit button -->
 	<button
 		type="submit"
-		class="px-5 py-2 border-2 border-gray-500 bg-neutrals-50 text-neutrals-900 bg-[length:140%] bg-no-repeat bg-[position:400%] hover:bg-[position:50%] hover:text-white transition-all duration-500 flex items-center self-center"
+		class="px-5 py-2 border-2 border-gray-500 bg-neutrals-50 text-neutrals-900 bg-[length:140%] bg-no-repeat bg-[position:400%] hover:bg-[position:50%] hover:text-white transition-all duration-500 flex items-center self-center rounded"
 		style="background-image: url('/button-dark.svg')"
 	>
 		Hit me up <svg

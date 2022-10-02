@@ -6,7 +6,7 @@ const { disabled, links } = SOCIALS;
 
 {
 	!disabled && links && Array.isArray(links) && (
-		<div class="flex justify-center sm:justify-start">
+		<div class="flex justify-center lg:justify-start">
 			{links.map((link) => (
 				<a
 					href={link.url}
@@ -14,7 +14,7 @@ const { disabled, links } = SOCIALS;
 					target="_blank"
 					rel="noopener"
 					rel="noreferrer"
-					class="mr-3 hover:underline text-xs font-medium"
+					class="mr-6 hover:underline text-sm lg:text-xs font-medium"
 				/>
 			))}
 		</div>

@@ -1,7 +1,163 @@
 ---
+import { RESUME } from '~/config.mjs';
 import SectionLayout from '~/layouts/SectionLayout.astro';
+
+const { about, skills } = RESUME;
+
+const howIWork = [
+	{
+		title: 'Design',
+		description: 'I design and prototype the user interface of the application.',
+		icon: 'https://img.icons8.com/color/48/000000/design.png',
+	},
+	{
+		title: 'Develop',
+		description: 'I develop the application using the latest technologies.',
+		icon: 'https://img.icons8.com/color/48/000000/development-skill.png',
+	},
+	{
+		title: 'Deploy',
+		description: 'I deploy the application to the cloud and make it available to the public.',
+		icon: 'https://img.icons8.com/color/48/000000/cloud-deployment.png',
+	},
+];
 ---
 
+<script>
+	const tabs = document.querySelectorAll('.tab-area');
+	const triggers = document.querySelectorAll('.trigger');
+
+	triggers.forEach((trigger) => {
+		trigger.addEventListener('click', (e) => {
+			const targetElement = e.target as HTMLElement;
+			const targetTab = document.getElementById(targetElement.dataset.tab);
+
+			targetElement.classList.add('text-gray-900', 'dark:text-gray-50');
+			targetElement.classList.remove('text-gray-500', 'dark:text-gray-500');
+			triggers.forEach((trigger) => {
+				if (trigger !== targetElement) {
+					trigger.classList.add('text-gray-500', 'dark:text-gray-500');
+					trigger.classList.remove('text-gray-900', 'dark:text-gray-50');
+				}
+			});
+
+			tabs.forEach((tab) => {
+				tab.classList.add('hidden');
+			});
+
+			if (targetTab) targetTab.classList.remove('hidden');
+		});
+	});
+
+	const skillsTabs = document.querySelectorAll('.tab');
+
+	skillsTabs.forEach((tab) => {
+		tab.addEventListener('click', (e) => {
+			const targetElement = e.target as HTMLElement;
+			const targetTab = document.getElementById(targetElement.dataset.tab) as HTMLElement;
+
+			skillsTabs.forEach((tab) => {
+				if (tab !== targetElement) tab.classList.remove('tab-active');
+			});
+
+			targetElement.classList.add('tab-active');
+			targetTab.classList.add('tab-active');
+		});
+	});
+</script>
+
 <SectionLayout id="about" title="About Me" description="Learn more about me" hasHeader={true}>
-	<div class=""></div>
+	<div class="mx-auto max-w-5xl h-3/4 flex flex-col sm:flex-row mt-10 sm:mt-20">
+		<div
+			class="flex flex-row sm:flex-col justify-around sm:justify-start w-full sm:w-2/5 py-5 sm:py-10 text-xs font-semibold sm:mr-8 m-0"
+		>
+			<a
+				class="mb-8 cursor-pointer text-gray-900 dark:text-gray-50 hover:text-gray-900 hover:dark:text-gray-50 trigger transition-colors duration-300 ease-in-out"
+				data-tab="aboutme"
+			>
+				<span class="mr-4 sm:inline-flex hidden">/01</span>
+				About Me
+			</a>
+			<a
+				class="mb-8 cursor-pointer text-gray-500 dark:text-gray-500 hover:text-gray-900 hover:dark:text-gray-50 transition-colors duration-300 ease-in-out trigger"
+				data-tab="howiwork"
+			>
+				<span class="mr-4 sm:inline-flex hidden">/02</span>
+				How I work
+			</a>
+			<a
+				class="mb-8 cursor-pointer text-gray-500 dark:text-gray-500 hover:text-gray-900 hover:dark:text-gray-50 transition-colors duration-300 ease-in-out trigger"
+				data-tab="skills"
+			>
+				<span class="mr-4 sm:inline-flex hidden">/03</span>
+				My Skills
+			</a>
+		</div>
+		<div class="w-full sm:w-3/5">
+			<div class="flex flex-col tab-area" id="aboutme">
+				<h3 class="mb-2 text-xl text-center sm:text-start font-semibold">{about.name}</h3>
+				<h4 class="mb-8 text-xs text-center sm:text-start font-semibold dark:text-gray-400">{about.profession}</h4>
+				{
+					about.summary
+						.split('\n\n')
+						.map((paragraph) => (
+							<p
+								class="text-sm text-center sm:text-start font-normal -tracking-wide dark:text-gray-400 mb-4"
+								set:html={paragraph}
+							/>
+						))
+				}
+			</div>
+			<div class="hidden flex-col tab-area" id="howiwork">
+				<h2 class="text-3xl font-bold text-gray-800">How I Work</h2>
+				<div class="flex flex-wrap my-4">
+					{
+						howIWork.map((item) => (
+							<div class="flex flex-col items-center mx-4 my-2">
+								<img src={item.icon} alt={item.title} class="w-12 h-12" />
+								<span class="text-gray-600 text-lg">{item.title}</span>
+								<span class="text-gray-600 text-lg">{item.description}</span>
+							</div>
+						))
+					}
+				</div>
+			</div>
+			<div class="hidden flex-col tab-area" id="skills">
+				<div class="tabs justify-center">
+					<a class="tab tab-bordered tab-active" data-tab="programmingLanguages">Programming Languages</a>
+					<a class="tab tab-bordered" data-tab="frameworksAndLibrairies">Frameworks & Librairies</a>
+					<a class="tab tab-bordered" data-tab="toolsAndPlatforms">Tools & Platforms</a>
+				</div>
+				<div class="tab-content flex justify-center pt-4">
+					<div id="programmingLanguages" class="tab tab-active">
+						<ul class="grid grid-cols-4 gap-4 overflow-hidden">
+							{skills.programmingLanguages.map((skill) => <li class="text-gray-600 font-medium">{skill}</li>)}
+						</ul>
+					</div>
+					<div id="frameworksAndLibrairies" class="tab hidden">
+						<div class="flex flex-wrap my-4">
+							{
+								skills.frameworksAndLibrairies.map((skill) => (
+									<div class="flex flex-col mx-4 my-2">
+										<span class="text-gray-600">{skill}</span>
+									</div>
+								))
+							}
+						</div>
+					</div>
+					<div id="toolsAndPlatforms" class="tab hidden">
+						<div class="flex flex-wrap my-4">
+							{
+								skills.toolsAndPlatforms.map((skill) => (
+									<div class="flex flex-col mx-4 my-2">
+										<span class="text-gray-600">{skill}</span>
+									</div>
+								))
+							}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </SectionLayout>

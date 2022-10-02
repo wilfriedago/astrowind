@@ -1,31 +1,35 @@
 ---
-import { CONTACT } from '~/config.mjs';
+import { CONFIG, CONTACT } from '~/config.mjs';
 
 import SectionLayout from '~/layouts/SectionLayout.astro';
 
+import Footer from '~/components/widgets/Footer.astro';
 import ContactForm from '~/components/widgets/ContactForm.astro';
 import SocialLinks from '~/components/widgets/SocialLinks.astro';
 
-const { email, formspreeEndpoint } = CONTACT;
+const { details } = CONTACT;
+const { formspreeEndpoint } = CONFIG;
 ---
 
 <SectionLayout id="contact">
-	<div class="mx-auto max-w-5xl h-3/4 flex flex-col sm:flex-row">
+	<div class="mx-auto max-w-5xl h-3/4 flex flex-col lg:flex-row">
 		<div class="basis-full lg:self-center">
 			<h1 class="text-5xl text-center lg:text-start font-bold my-6">Get in touch</h1>
 			<p class="text-center lg:text-start text-sm font-medium tracking-wide mb-20">
 				I'm always open to new opportunities and challenges. If you have any questions or just want to say hi, feel free
 				to contact me.
 			</p>
-			<p class="mb-20 text-center lg:text-start">
-				<a href={`mailto:${email}`} class="text-3xl font-semibold">
-					{email}
+			<p class="mb-16 lg:mb-20 text-center lg:text-start">
+				<a href={`mailto:${details.email}`} class="lg:text-4xl sm:text-3xl text-2xl font-semibold">
+					{details.email}
 				</a>
 			</p>
+			<p class="text-gray-600 dark:text-gray-500 text-xs text-center lg:text-start font-semibold mb-2">Follow Me</p>
 			<SocialLinks />
 		</div>
 		<div class="basis-full lg:self-center mt-10 lg:mt-0 lg:ml-28">
 			<ContactForm actionUrl={formspreeEndpoint} />
 		</div>
 	</div>
+	<Footer />
 </SectionLayout>
