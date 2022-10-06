@@ -31,39 +31,54 @@ const RESUME = {
 			{
 				name: 'Twitter',
 				url: 'https://twitter.com/wilfriedago_',
+				relevant: false
+			},
+
+			{
+				name: 'LinkedIn',
+				url: 'https://www.linkedin.com/in/wilfriedago/',
+				relevant: true
+			},
+
+			{
+				name: 'Instagram',
+				url: 'https://www.instagram.com/wilfriedago_/',
+				relevant: false
+			},
+			{
+				name: 'AngelList',
+				url: 'https://angel.co/u/wilfriedago',
+				relevant: true
 			},
 			{
 				name: 'Github',
 				url: 'https://github.com/wilfriedago',
-			},
-			{
-				name: 'LinkedIn',
-				url: 'https://www.linkedin.com/in/wilfriedago/',
-			},
-			{
-				name: 'Instagram',
-				url: 'https://www.instagram.com/wilfriedago_/',
-			},
+				relevant: true
+			}
 		],
+		files: {
+			resume: 'WILFRIED_AGO_RESUME.pdf',
+			coverLetter: 'WILFRIED_AGO_COVER_LETTER.pdf',
+		}
 	},
-	uses: [
+	services: [
 		{
-			name: 'editorAndExtensions',
-			title: 'Editor & Extensions',
-			items: [
-				{
-					name: 'Visual Studio Code',
-					url: 'https://code.visualstudio.com/',
-				},
-				{
-					name: 'Astro',
-					url: 'https://marketplace.visualstudio.com/items?itemName=astro-build.astro-vscode',
-				},
-				{
-					name: 'Github Copilot',
-					url: 'https://copilot.github.com/',
-				},
-			],
+			title: 'Web Development',
+			description:
+				'I build websites and web applications using modern technologies like React, Next.js, Svelte, TailwindCSS, and more. I also provide fullstack solutions using WordPress & Jamstack.',
+			icon: 'https://img.icons8.com/nolan/48/code--v2.png',
+		},
+		{
+			title: 'UI/UX Design',
+			description:
+				'I design beautiful and functional user interfaces for websites and web applications, using modern design tools like Figma, and more.',
+			icon: 'https://img.icons8.com/nolan/48/windows10-personalization.png',
+		},
+		{
+			title: 'Graphic Design',
+			description:
+				'I design logos, posters, flyers, and other graphic materials for print and digital media. ',
+			icon: 'https://img.icons8.com/nolan/48/design.png',
 		},
 	],
 	skills: [
@@ -113,7 +128,7 @@ const RESUME = {
 				'Firebase',
 				'Github Pages',
 				'WordPress',
-				'Shopify',
+				'Ngrok',
 				'Vercel',
 				'Hostinger',
 				'LWS.fr',
