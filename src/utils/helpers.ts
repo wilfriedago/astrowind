@@ -1,43 +1,32 @@
 // Description: Helper functions
 
-export function getStorage(key: string): boolean | string | number | object | null {
+function getStorage(key: string): boolean | string | number | object | null {
 	return localStorage.getItem(key) ? JSON.parse(localStorage.getItem(key)) : null;
 }
 
-export function setStorage(key: string, value: unknown): void {
+function setStorage(key: string, value: unknown): void {
 	localStorage.setItem(key, JSON.stringify(value));
 }
 
-export function attachEvent(selector, event: Event, fn: unknown): void {
+function attachEvent(selector: string, eventType: string, fn: CallableFunction): void {
 	const matches = document.querySelectorAll(selector);
 
 	if (matches && matches.length)
-		matches.forEach((elem) => {
-			elem.addEventListener(event, () => fn(elem), false);
+		matches.forEach((elem: HTMLElement) => {
+			elem.addEventListener(eventType, (e: Event) => fn(elem, e), false);
 		});
 }
 
-export function initTabs(triggers: NodeListOf<Element>, tabs: NodeListOf<Element>): void {
-	triggers.forEach((trigger) => {
-		trigger.addEventListener('click', (e: Event) => {
-			e.preventDefault();
+function initTabs(triggers: string, tabs: string): void {
+	attachEvent(triggers, 'click', (elem: HTMLElement, e: Event) => {
+		e.preventDefault();
+		const targetTab = document.getElementById(elem.dataset.tab);
 
-			const targetElement = e.target as HTMLElement;
-			const targetTab = document.getElementById(targetElement.dataset.tab);
-
-			if (targetTab) {
-				tabs.forEach((tab) => {
-					tab.classList.add('hidden');
-				});
-
-				targetTab.classList.remove('hidden');
-			}
-
-			triggers.forEach((trigger) => {
-				trigger.classList.remove('tab-active');
-			});
-
-			trigger.classList.add('tab-active');
+		document.querySelectorAll(tabs).forEach((tab: HTMLElement) => {
+			if (tab.id === targetTab.id) tab.classList.remove('hidden');
+			else tab.classList.add('hidden');
 		});
 	});
 }
+
+export { getStorage, setStorage, attachEvent, initTabs };

@@ -1,4 +1,4 @@
-export const SITE = {
+const SITE = {
 	name: 'Wilfried AGO | Frontend Developer',
 
 	origin: 'https://wilfriedago.me',
@@ -12,17 +12,16 @@ export const SITE = {
 	googleSiteVerificationId: import.meta.env.GOOGLE_SITE_VERIFICATION,
 };
 
-export const CONFIG = {
-	// If you want to use the dark mode, set this to true
-	darkMode: true,
+const CONFIG = {
 	formspreeEndpoint: import.meta.env.FORMSPREE_ENDPOINT,
 };
 
-export const RESUME = {
+const RESUME = {
 	about: {
 		name: 'Wilfried AGO',
 		profession: 'Student | Frontend Developer | UI/UX Designer',
-		summary: 'Detail-oriented graphic designer and front-end developer. I believe that a great design is the result of understanding a problem to its core and solving it with a simple and elegant solution. \n\n Passionate about visual design, web development, and user experience. I looking for an internship or a job as a web developer or UI/UX designer. I am also open to freelance projects. Feel free to contact if you have any questions or if you want to work with me.',
+		summary:
+			'Detail-oriented graphic designer and front-end developer. I believe that a great design is the result of understanding a problem to its core and solving it with a simple and elegant solution. \n\n Passionate about visual design, web development, and user experience. I looking for an internship or a job as a web developer or UI/UX designer. I am also open to freelance projects. Feel free to contact if you have any questions or if you want to work with me.',
 		contact: {
 			email: 'contact@wilfriedago.me',
 			phone: '+229 62 000 975',
@@ -71,19 +70,53 @@ export const RESUME = {
 		{
 			name: 'programmingLanguages',
 			title: 'Programming Languages',
-			items: ['HTML & CSS', 'JavaScript', 'TypeScript', 'PHP', 'Python', 'Java', 'C', 'SQL'
-			],
+			items: ['HTML & CSS', 'JavaScript', 'TypeScript', 'PHP', 'Python', 'Java', 'C', 'SQL'],
 		},
 		{
 			name: 'frameworksAndLibrairies',
 			title: 'Frameworks & Librairies',
-			items: ['Vue', 'Astro', 'Angular', 'React', 'Laravel', 'Express', 'Bootstrap', 'Tailwind CSS', 'jQuery', 'Axios', 'Sequelize',
+			items: [
+				'Vue',
+				'Astro',
+				'Angular',
+				'React',
+				'Laravel',
+				'Express',
+				'Bootstrap',
+				'Tailwind CSS',
+				'jQuery',
+				'Axios',
+				'Sequelize',
 			],
 		},
 		{
 			name: 'toolsAndPlatforms',
 			title: 'Tools & Platforms',
-			items: ['Git', 'Github Actions', 'NPM', 'Yarn', 'Docker', 'Vite', 'Gulp', 'ESLint', 'Prettier', 'Postman', 'Figma', 'Adobe XD', 'Adobe Photoshop', 'Adobe Illustrator', 'Canva', 'Netlify', 'Heroku', 'Firebase', 'Github Pages', 'WordPress', 'Shopify', 'Vercel', 'Hostinger', 'LWS.fr',
+			items: [
+				'Git',
+				'Github Actions',
+				'NPM',
+				'Yarn',
+				'Docker',
+				'Vite',
+				'Gulp',
+				'ESLint',
+				'Prettier',
+				'Postman',
+				'Figma',
+				'Adobe XD',
+				'Adobe Photoshop',
+				'Adobe Illustrator',
+				'Canva',
+				'Netlify',
+				'Heroku',
+				'Firebase',
+				'Github Pages',
+				'WordPress',
+				'Shopify',
+				'Vercel',
+				'Hostinger',
+				'LWS.fr',
 			],
 		},
 	],
@@ -94,7 +127,8 @@ export const RESUME = {
 			companyLink: 'https://wilfriedago.me',
 			startDate: '2020',
 			endDate: 'Present',
-			description: 'I work as a Frontend Developer at Les Éditions du Flamboyant & Communications. I build and maintain websites and web applications.',
+			description:
+				'I work as a Frontend Developer at Les Éditions du Flamboyant & Communications. I build and maintain websites and web applications.',
 		},
 	],
 	education: [
@@ -112,7 +146,7 @@ export const RESUME = {
 			startDate: 'October 2015',
 			endDate: 'July 2018',
 			description: 'I studied at CS Clé de la Réussite.',
-		}
+		},
 	],
 	projects: [
 		{
@@ -154,7 +188,7 @@ export const RESUME = {
 			title: 'Les Éditions du Flamboyant & Communications',
 			description: 'Booking selling website',
 			image: '/images/portfolio.png',
-			technologies: ['WordPress', 'Woocommerce', 'KKiaPay',],
+			technologies: ['WordPress', 'Woocommerce', 'KKiaPay'],
 			links: [
 				{
 					name: 'Website',
@@ -165,23 +199,23 @@ export const RESUME = {
 	],
 };
 
-export const CONTACT = {
+const CONTACT = {
 	disabled: false,
 	details: RESUME.about.contact,
 };
 
-export const PROJECTS = {
+const PROJECTS = {
 	disabled: false,
 	projectsPerPage: 3,
-	list: RESUME.projects
+	list: RESUME.projects,
 };
 
-export const SOCIALS = {
+const SOCIALS = {
 	disabled: false,
-	links: RESUME.about.socials
+	links: RESUME.about.socials,
 };
 
-export const BLOG = {
+const BLOG = {
 	disabled: false,
 	postsPerPage: 4,
 
@@ -205,3 +239,5 @@ export const BLOG = {
 		pathname: 'tag', // set empty to change from /tag/some-tag to /some-tag
 	},
 };
+
+export { SITE, CONFIG, RESUME, CONTACT, PROJECTS, SOCIALS, BLOG };
