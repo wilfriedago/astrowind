@@ -10,6 +10,34 @@ const { about, skills, services } = RESUME;
 	import { initTabs } from '~/utils/helpers';
 	initTabs('.trigger', '.tab-area');
 	initTabs('.tab', '.tab-content');
+
+	const tabs = document.querySelectorAll('.tab');
+
+	const triggers = document.querySelectorAll('.trigger');
+
+	tabs.forEach((tab) => {
+		tab.addEventListener('click', (e) => {
+			const tab = e.target as HTMLElement;
+
+			tabs.forEach((tab) => {
+				tab.classList.remove('tab-active');
+			});
+
+			tab.classList.add('tab-active');
+		});
+	});
+
+	triggers.forEach((trigger) => {
+		trigger.addEventListener('click', (e) => {
+			const trigger = e.target as HTMLElement;
+
+			triggers.forEach((trigger) => {
+				trigger.classList.remove('trigger-active');
+			});
+
+			trigger.classList.add('trigger-active');
+		});
+	});
 </script>
 
 <SectionLayout id="about" title="About Me" description="Learn more about me" hasHeader={true}>
@@ -18,21 +46,21 @@ const { about, skills, services } = RESUME;
 			class="flex flex-row sm:flex-col items-start justify-around sm:justify-start w-full sm:w-2/5 p-5 sm:py-10 text-xs font-semibold sm:mx-4 m-0"
 		>
 			<button
-				class="mb-8 cursor-pointer text-gray-500 dark:text-gray-500 hover:text-gray-900 hover:dark:text-gray-50 transition-colors duration-300 ease-in-out trigger"
+				class="mb-8 cursor-pointer text-gray-500 hover:text-gray-900 hover:dark:text-gray-50 transition-colors duration-300 ease-in-out trigger trigger-active"
 				data-tab="aboutme"
 			>
 				<span class="mr-4 sm:inline-flex hidden">/01</span>
 				About Me
 			</button>
 			<button
-				class="mb-8 cursor-pointer text-gray-500 dark:text-gray-500 hover:text-gray-900 hover:dark:text-gray-50 transition-colors duration-300 ease-in-out trigger"
+				class="mb-8 cursor-pointer text-gray-500 hover:text-gray-900 hover:dark:text-gray-50 transition-colors duration-300 ease-in-out trigger"
 				data-tab="skills"
 			>
 				<span class="mr-4 sm:inline-flex hidden">/02</span>
 				My Skills
 			</button>
 			<button
-				class="mb-8 cursor-pointer text-gray-500 dark:text-gray-500 hover:text-gray-900 hover:dark:text-gray-50 transition-colors duration-300 ease-in-out trigger"
+				class="mb-8 cursor-pointer text-gray-500 hover:text-gray-900 hover:dark:text-gray-50 transition-colors duration-300 ease-in-out trigger"
 				data-tab="services"
 			>
 				<span class="mr-4 sm:inline-flex hidden">/03</span>
@@ -94,23 +122,23 @@ const { about, skills, services } = RESUME;
 				</div>
 			</div>
 			<div class="flex-col tab-area hidden" id="services">
-				<div class="flex flex-wrap my-4">
-					<div class="carousel w-full">
-						{
-							services.map((service, index) => (
-								<div id={`slide-${++index}`} class="carousel-item relative w-full p-4">
-									<div class="flex flex-col items-center justify-center h-full">
-										<div class="flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-800">
-											<img src={service.icon} alt="" />
+				<div class="w-full h-full flex flex-col sm:flex-row items-center">
+					{
+						services.map((service) => (
+							<div class="w-full p-4">
+								<div class="flex flex-col items-center justify-center h-full">
+									<div class="tooltip" data-tip={service.description}>
+										<div class="flex items-center justify-center cursor-pointer w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-800">
+											<img src={service.icon} alt={service.title} />
 										</div>
-										<h3 class="text-gray-800 dark:text-gray-100 text-lg font-semibold mt-4">{service.title}</h3>
-										<p class="text-gray-800 dark:text-gray-400 text-sm text-center mt-2">{service.description}</p>
-										<div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2" />
 									</div>
+
+									<h3 class="text-gray-800 dark:text-gray-100 text-lg font-semibold mt-4">{service.title}</h3>
+									<div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2" />
 								</div>
-							))
-						}
-					</div>
+							</div>
+						))
+					}
 				</div>
 			</div>
 		</div>

@@ -8,6 +8,12 @@
 	}
 }
 
+@layer utilities {
+	.trigger-active {
+		@apply text-gray-900 dark:text-gray-50 transition-colors duration-200 ease-in-out;
+	}
+}
+
 [astro-icon] > * {
 	stroke-width: 1.5;
 }
