@@ -1,4 +1,4 @@
-export const SITE = {
+const SITE = {
 	name: 'Wilfried AGO | Frontend Developer',
 
 	origin: 'https://wilfriedago.me',
@@ -8,23 +8,22 @@ export const SITE = {
 	description:
 		"I'm a Frontend Developer based in Cotonou, Benin. I'm passionate about web development and I love to learn new things.",
 
-	googleAnalyticsId: '', // or "G-XXXXXXXXXX",
-	googleSiteVerificationId: 'e7KbvzQ5B8kgpC0l7rXdiWbH53p6z0NBg80H9T6jWlQ',
+	googleAnalyticsId: import.meta.env.GOOGLE_ANALYTICS_ID, // or "G-XXXXXXXXXX",
+	googleSiteVerificationId: import.meta.env.GOOGLE_SITE_VERIFICATION,
 };
 
-export const CONFIG = {
-	// If you want to use the dark mode, set this to true
-	darkMode: true,
+const CONFIG = {
 	formspreeEndpoint: import.meta.env.FORMSPREE_ENDPOINT,
 };
 
-export const RESUME = {
+const RESUME = {
 	about: {
 		name: 'Wilfried AGO',
 		profession: 'Student | Frontend Developer | UI/UX Designer',
-		summary: 'Detail-oriented graphic designer and front-end developer. I believe that a great design is the result of understanding a problem to its core and solving it with a simple and elegant solution. \n\n Passionate about visual design, web development, and user experience. I looking for an internship or a job as a web developer or UI/UX designer. I am also open to freelance projects. Feel free to contact if you have any questions or if you want to work with me.',
+		summary:
+			'Detail-oriented graphic designer and front-end developer. I believe that a great design is the result of understanding a problem to its core and solving it with a simple and elegant solution. \n\n Passionate about visual design, web development, and user experience. I looking for an internship or a job as a web developer or UI/UX designer. I am also open to freelance projects. Feel free to contact if you have any questions or if you want to work with me.',
 		contact: {
-			email: 'wilfriedago@pm.me',
+			email: 'contact@wilfriedago.me',
 			phone: '+229 62 000 975',
 			address: 'Kouhounou, Cotonou Benin',
 		},
@@ -32,29 +31,110 @@ export const RESUME = {
 			{
 				name: 'Twitter',
 				url: 'https://twitter.com/wilfriedago_',
+				relevant: false
+			},
+
+			{
+				name: 'LinkedIn',
+				url: 'https://www.linkedin.com/in/wilfriedago/',
+				relevant: true
+			},
+
+			{
+				name: 'Instagram',
+				url: 'https://www.instagram.com/wilfriedago_/',
+				relevant: false
+			},
+			{
+				name: 'AngelList',
+				url: 'https://angel.co/u/wilfriedago',
+				relevant: true
 			},
 			{
 				name: 'Github',
 				url: 'https://github.com/wilfriedago',
-			},
-			{
-				name: 'LinkedIn',
-				url: 'https://www.linkedin.com/in/wilfriedago/',
-			},
-			{
-				name: 'Instagram',
-				url: 'https://www.instagram.com/wilfriedago_/',
-			},
+				relevant: true
+			}
 		],
+		files: {
+			resume: 'WILFRIED_AGO_RESUME.pdf',
+			coverLetter: 'WILFRIED_AGO_COVER_LETTER.pdf',
+		}
 	},
-	skills: {
-		programmingLanguages: ['HTML5 & CSS3', 'JavaScript', 'TypeScript', 'PHP', 'Python', 'Java', 'C', 'SQL'
-		],
-		frameworksAndLibrairies: ['Vue', 'Astro', 'Angular', 'React', 'Laravel', 'Express', 'Bootstrap', 'Tailwind CSS', 'jQuery', 'Axios', 'Sequelize',
-		],
-		toolsAndPlatforms: ['Git', 'Github Actions', 'NPM', 'Yarn', 'Docker', 'Vite', 'Gulp', 'ESLint', 'Prettier', 'Postman', 'Figma', 'Adobe XD', 'Adobe Photoshop', 'Adobe Illustrator', 'Canva', 'Netlify', 'Heroku', 'Firebase', 'Github Pages', 'WordPress', 'Shopify', 'Vercel', 'Hostinger', 'LWS.fr',
-		],
-	},
+	services: [
+		{
+			title: 'Web Development',
+			description:
+				'I build websites and web applications using modern technologies like React, Next.js, Svelte, TailwindCSS, and more. I also provide fullstack solutions using WordPress & Jamstack.',
+			icon: 'https://img.icons8.com/nolan/48/code--v2.png',
+		},
+		{
+			title: 'UI/UX Design',
+			description:
+				'I design beautiful and functional user interfaces for websites and web applications, using modern design tools like Figma, and more.',
+			icon: 'https://img.icons8.com/nolan/48/windows10-personalization.png',
+		},
+		{
+			title: 'Graphic Design',
+			description:
+				'I design logos, posters, flyers, and other graphic materials for print and digital media. ',
+			icon: 'https://img.icons8.com/nolan/48/design.png',
+		},
+	],
+	skills: [
+		{
+			name: 'programmingLanguages',
+			title: 'Programming Languages',
+			items: ['HTML & CSS', 'JavaScript', 'TypeScript', 'PHP', 'Python', 'Java', 'C', 'SQL'],
+		},
+		{
+			name: 'frameworksAndLibrairies',
+			title: 'Frameworks & Librairies',
+			items: [
+				'Vue',
+				'Astro',
+				'Angular',
+				'React',
+				'Laravel',
+				'Express',
+				'Bootstrap',
+				'Tailwind CSS',
+				'jQuery',
+				'Axios',
+				'Sequelize',
+			],
+		},
+		{
+			name: 'toolsAndPlatforms',
+			title: 'Tools & Platforms',
+			items: [
+				'Git',
+				'Github Actions',
+				'NPM',
+				'Yarn',
+				'Docker',
+				'Vite',
+				'Gulp',
+				'ESLint',
+				'Prettier',
+				'Postman',
+				'Figma',
+				'Adobe XD',
+				'Adobe Photoshop',
+				'Adobe Illustrator',
+				'Canva',
+				'Netlify',
+				'Heroku',
+				'Firebase',
+				'Github Pages',
+				'WordPress',
+				'Ngrok',
+				'Vercel',
+				'Hostinger',
+				'LWS.fr',
+			],
+		},
+	],
 	experiences: [
 		{
 			title: 'Frontend Developer',
@@ -62,7 +142,8 @@ export const RESUME = {
 			companyLink: 'https://wilfriedago.me',
 			startDate: '2020',
 			endDate: 'Present',
-			description: 'I work as a Frontend Developer at Les Éditions du Flamboyant & Communications. I build and maintain websites and web applications.',
+			description:
+				'I work as a Frontend Developer at Les Éditions du Flamboyant & Communications. I build and maintain websites and web applications.',
 		},
 	],
 	education: [
@@ -77,11 +158,10 @@ export const RESUME = {
 		{
 			title: 'Baccalaureate D',
 			school: 'CS Clé de la Réussite',
-			schoolLink: '',
 			startDate: 'October 2015',
 			endDate: 'July 2018',
 			description: 'I studied at CS Clé de la Réussite.',
-		}
+		},
 	],
 	projects: [
 		{
@@ -89,11 +169,11 @@ export const RESUME = {
 			title: 'Portfolio Website',
 			description: 'My personal portfolio',
 			image: '/images/portfolio.png',
-			technologies: ['Astro', 'Vue', 'Tailwind CSS', 'Netlify'],
+			technologies: ['Astro', 'Vue', 'Tailwind CSS', 'Netlify', 'Github Actions', 'Strapi'],
 			links: [
 				{
 					name: 'Github',
-					url: 'https://github.com/wilfriedago/portfolio',
+					url: 'https://github.com/wilfriedago/astrowind',
 				},
 				{
 					name: 'Website',
@@ -134,23 +214,23 @@ export const RESUME = {
 	],
 };
 
-export const CONTACT = {
+const CONTACT = {
 	disabled: false,
 	details: RESUME.about.contact,
 };
 
-export const PROJECTS = {
+const PROJECTS = {
 	disabled: false,
 	projectsPerPage: 3,
-	list: RESUME.projects
+	list: RESUME.projects,
 };
 
-export const SOCIALS = {
+const SOCIALS = {
 	disabled: false,
-	links: RESUME.about.socials
+	links: RESUME.about.socials,
 };
 
-export const BLOG = {
+const BLOG = {
 	disabled: false,
 	postsPerPage: 4,
 
@@ -174,3 +254,5 @@ export const BLOG = {
 		pathname: 'tag', // set empty to change from /tag/some-tag to /some-tag
 	},
 };
+
+export { SITE, CONFIG, RESUME, CONTACT, PROJECTS, SOCIALS, BLOG };

@@ -2,21 +2,30 @@
 import { SOCIALS } from '~/config.mjs';
 
 const { disabled, links } = SOCIALS;
+
+export interface Props {
+	relevantOnly?: boolean;
+}
+
+const { relevantOnly = true } = Astro.props as Props;
 ---
 
 {
 	!disabled && links && Array.isArray(links) && (
 		<div class="flex justify-center lg:justify-start">
-			{links.map((link) => (
-				<a
-					href={link.url}
-					set:html={link.name}
-					target="_blank"
-					rel="noopener"
-					rel="noreferrer"
-					class="mr-6 hover:underline text-sm lg:text-xs font-medium"
-				/>
-			))}
+			{links.map((link) =>
+				!relevantOnly || link.relevant ? (
+					<a
+						href={link.url}
+						set:html={link.name}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="mr-6 hover:underline text-sm lg:text-xs font-medium"
+					/>
+				) : (
+					''
+				)
+			)}
 		</div>
 	)
 }

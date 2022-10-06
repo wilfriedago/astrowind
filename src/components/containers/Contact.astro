@@ -3,7 +3,6 @@ import { CONFIG, CONTACT } from '~/config.mjs';
 
 import SectionLayout from '~/layouts/SectionLayout.astro';
 
-import Footer from '~/components/widgets/Footer.astro';
 import ContactForm from '~/components/widgets/ContactForm.astro';
 import SocialLinks from '~/components/widgets/SocialLinks.astro';
 
@@ -25,11 +24,10 @@ const { formspreeEndpoint } = CONFIG;
 				</a>
 			</p>
 			<p class="text-gray-600 dark:text-gray-500 text-xs text-center lg:text-start font-semibold mb-2">Follow Me</p>
-			<SocialLinks />
+			<SocialLinks relevantOnly={true} />
 		</div>
 		<div class="basis-full lg:self-center mt-10 lg:mt-0 lg:ml-28">
 			<ContactForm actionUrl={formspreeEndpoint} />
 		</div>
 	</div>
-	<Footer />
 </SectionLayout>

@@ -1,97 +1,43 @@
 ---
-import { RESUME } from '~/config.mjs';
 import SectionLayout from '~/layouts/SectionLayout.astro';
 
-const { about, skills } = RESUME;
+import { RESUME } from '~/config.mjs';
 
-const howIWork = [
-	{
-		title: 'Design',
-		description: 'I design and prototype the user interface of the application.',
-		icon: 'https://img.icons8.com/color/48/000000/design.png',
-	},
-	{
-		title: 'Develop',
-		description: 'I develop the application using the latest technologies.',
-		icon: 'https://img.icons8.com/color/48/000000/development-skill.png',
-	},
-	{
-		title: 'Deploy',
-		description: 'I deploy the application to the cloud and make it available to the public.',
-		icon: 'https://img.icons8.com/color/48/000000/cloud-deployment.png',
-	},
-];
+const { about, skills, services } = RESUME;
 ---
 
 <script>
-	const tabs = document.querySelectorAll('.tab-area');
-	const triggers = document.querySelectorAll('.trigger');
-
-	triggers.forEach((trigger) => {
-		trigger.addEventListener('click', (e) => {
-			const targetElement = e.target as HTMLElement;
-			const targetTab = document.getElementById(targetElement.dataset.tab);
-
-			targetElement.classList.add('text-gray-900', 'dark:text-gray-50');
-			targetElement.classList.remove('text-gray-500', 'dark:text-gray-500');
-			triggers.forEach((trigger) => {
-				if (trigger !== targetElement) {
-					trigger.classList.add('text-gray-500', 'dark:text-gray-500');
-					trigger.classList.remove('text-gray-900', 'dark:text-gray-50');
-				}
-			});
-
-			tabs.forEach((tab) => {
-				tab.classList.add('hidden');
-			});
-
-			if (targetTab) targetTab.classList.remove('hidden');
-		});
-	});
-
-	const skillsTabs = document.querySelectorAll('.tab');
-
-	skillsTabs.forEach((tab) => {
-		tab.addEventListener('click', (e) => {
-			const targetElement = e.target as HTMLElement;
-			const targetTab = document.getElementById(targetElement.dataset.tab) as HTMLElement;
-
-			skillsTabs.forEach((tab) => {
-				if (tab !== targetElement) tab.classList.remove('tab-active');
-			});
-
-			targetElement.classList.add('tab-active');
-			targetTab.classList.add('tab-active');
-		});
-	});
+	import { initTabs } from '~/utils/helpers';
+	initTabs('.trigger', '.tab-area');
+	initTabs('.tab', '.tab-content');
 </script>
 
 <SectionLayout id="about" title="About Me" description="Learn more about me" hasHeader={true}>
-	<div class="mx-auto max-w-5xl h-3/4 flex flex-col sm:flex-row mt-10 sm:mt-20">
+	<div class="mx-auto max-w-5xl flex flex-col sm:flex-row m-10 sm:mt-20">
 		<div
-			class="flex flex-row sm:flex-col justify-around sm:justify-start w-full sm:w-2/5 py-5 sm:py-10 text-xs font-semibold sm:mr-8 m-0"
+			class="flex flex-row sm:flex-col items-start justify-around sm:justify-start w-full sm:w-2/5 p-5 sm:py-10 text-xs font-semibold sm:mx-4 m-0"
 		>
-			<a
-				class="mb-8 cursor-pointer text-gray-900 dark:text-gray-50 hover:text-gray-900 hover:dark:text-gray-50 trigger transition-colors duration-300 ease-in-out"
+			<button
+				class="mb-8 cursor-pointer text-gray-500 dark:text-gray-500 hover:text-gray-900 hover:dark:text-gray-50 transition-colors duration-300 ease-in-out trigger"
 				data-tab="aboutme"
 			>
 				<span class="mr-4 sm:inline-flex hidden">/01</span>
 				About Me
-			</a>
-			<a
-				class="mb-8 cursor-pointer text-gray-500 dark:text-gray-500 hover:text-gray-900 hover:dark:text-gray-50 transition-colors duration-300 ease-in-out trigger"
-				data-tab="howiwork"
-			>
-				<span class="mr-4 sm:inline-flex hidden">/02</span>
-				How I work
-			</a>
-			<a
+			</button>
+			<button
 				class="mb-8 cursor-pointer text-gray-500 dark:text-gray-500 hover:text-gray-900 hover:dark:text-gray-50 transition-colors duration-300 ease-in-out trigger"
 				data-tab="skills"
 			>
-				<span class="mr-4 sm:inline-flex hidden">/03</span>
+				<span class="mr-4 sm:inline-flex hidden">/02</span>
 				My Skills
-			</a>
+			</button>
+			<button
+				class="mb-8 cursor-pointer text-gray-500 dark:text-gray-500 hover:text-gray-900 hover:dark:text-gray-50 transition-colors duration-300 ease-in-out trigger"
+				data-tab="services"
+			>
+				<span class="mr-4 sm:inline-flex hidden">/03</span>
+				Services
+			</button>
 		</div>
 		<div class="w-full sm:w-3/5">
 			<div class="flex flex-col tab-area" id="aboutme">
@@ -107,54 +53,63 @@ const howIWork = [
 							/>
 						))
 				}
+				{
+					about.files.resume ? (
+						<a
+							href={about.files.resume}
+							class="text-sm text-center sm:text-start font-semibold dark:text-gray-400 mb-4"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							Download Resume
+						</a>
+					) : null
+				}
 			</div>
-			<div class="hidden flex-col tab-area" id="howiwork">
-				<h2 class="text-3xl font-bold text-gray-800">How I Work</h2>
-				<div class="flex flex-wrap my-4">
+			<div class="flex-col tab-area hidden" id="skills">
+				<div class="tabs justify-center">
 					{
-						howIWork.map((item) => (
-							<div class="flex flex-col items-center mx-4 my-2">
-								<img src={item.icon} alt={item.title} class="w-12 h-12" />
-								<span class="text-gray-600 text-lg">{item.title}</span>
-								<span class="text-gray-600 text-lg">{item.description}</span>
-							</div>
+						skills.map((skillGroup, i) => (
+							<button class={`tab tab-bordered ${(i === 0 && 'tab-active') || ''}`} data-tab={skillGroup.name}>
+								{skillGroup.title}
+							</button>
+						))
+					}
+				</div>
+				<div class="p-8">
+					{
+						skills.map((skillGroup, i) => (
+							<ul
+								id={skillGroup.name}
+								class={`grid grid-cols-3 sm:grid-cols-4 gap-6 sm:gap-4 h-full tab-content ${
+									(i !== 0 && 'hidden') || ''
+								}`}
+							>
+								{skillGroup.items.map((skill) => (
+									<li class="text-gray-800 dark:text-gray-300 text-sm text-center font-medium">{skill}</li>
+								))}
+							</ul>
 						))
 					}
 				</div>
 			</div>
-			<div class="hidden flex-col tab-area" id="skills">
-				<div class="tabs justify-center">
-					<a class="tab tab-bordered tab-active" data-tab="programmingLanguages">Programming Languages</a>
-					<a class="tab tab-bordered" data-tab="frameworksAndLibrairies">Frameworks & Librairies</a>
-					<a class="tab tab-bordered" data-tab="toolsAndPlatforms">Tools & Platforms</a>
-				</div>
-				<div class="tab-content flex justify-center pt-4">
-					<div id="programmingLanguages" class="tab tab-active">
-						<ul class="grid grid-cols-4 gap-4 overflow-hidden">
-							{skills.programmingLanguages.map((skill) => <li class="text-gray-600 font-medium">{skill}</li>)}
-						</ul>
-					</div>
-					<div id="frameworksAndLibrairies" class="tab hidden">
-						<div class="flex flex-wrap my-4">
-							{
-								skills.frameworksAndLibrairies.map((skill) => (
-									<div class="flex flex-col mx-4 my-2">
-										<span class="text-gray-600">{skill}</span>
+			<div class="flex-col tab-area hidden" id="services">
+				<div class="flex flex-wrap my-4">
+					<div class="carousel w-full">
+						{
+							services.map((service, index) => (
+								<div id={`slide-${++index}`} class="carousel-item relative w-full p-4">
+									<div class="flex flex-col items-center justify-center h-full">
+										<div class="flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-800">
+											<img src={service.icon} alt="" />
+										</div>
+										<h3 class="text-gray-800 dark:text-gray-100 text-lg font-semibold mt-4">{service.title}</h3>
+										<p class="text-gray-800 dark:text-gray-400 text-sm text-center mt-2">{service.description}</p>
+										<div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2" />
 									</div>
-								))
-							}
-						</div>
-					</div>
-					<div id="toolsAndPlatforms" class="tab hidden">
-						<div class="flex flex-wrap my-4">
-							{
-								skills.toolsAndPlatforms.map((skill) => (
-									<div class="flex flex-col mx-4 my-2">
-										<span class="text-gray-600">{skill}</span>
-									</div>
-								))
-							}
-						</div>
+								</div>
+							))
+						}
 					</div>
 				</div>
 			</div>

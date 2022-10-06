@@ -11,7 +11,7 @@ const trim = (str, ch) => {
 };
 
 const trimSlash = (s) => trim(trim(s, '/'));
-const createPath = (...params) => '/' + params.filter((el) => !!el).join('/');
+const createPath = (...params) => '/' + params.filter((el) => Boolean(el)).join('/');
 
 const basePathname = trimSlash(SITE.basePathname);
 
