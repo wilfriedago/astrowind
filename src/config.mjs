@@ -30,36 +30,36 @@ const RESUME = {
 		socials: [
 			{
 				name: 'Twitter',
-				url: 'https://twitter.com/wilfriedago_',
-				relevant: false
+				url: 'https://twitter.com/wilfriedago_/',
+				relevant: false,
 			},
 
 			{
 				name: 'LinkedIn',
 				url: 'https://www.linkedin.com/in/wilfriedago/',
-				relevant: true
+				relevant: true,
 			},
 
 			{
 				name: 'Instagram',
 				url: 'https://www.instagram.com/wilfriedago_/',
-				relevant: false
+				relevant: false,
 			},
 			{
 				name: 'AngelList',
-				url: 'https://angel.co/u/wilfriedago',
-				relevant: true
+				url: 'https://angel.co/u/wilfriedago/',
+				relevant: true,
 			},
 			{
 				name: 'Github',
-				url: 'https://github.com/wilfriedago',
-				relevant: true
-			}
+				url: 'https://github.com/wilfriedago/',
+				relevant: true,
+			},
 		],
 		files: {
-			resume: 'WILFRIED_AGO_RESUME.pdf',
-			coverLetter: 'WILFRIED_AGO_COVER_LETTER.pdf',
-		}
+			resume: 'WILFRIED_AGO_RESUME.pdf', // TODO : Upload your resume on the root
+			coverLetter: 'WILFRIED_AGO_COVER_LETTER.pdf', // TODO : Upload your cover letter too
+		},
 	},
 	services: [
 		{
@@ -76,8 +76,7 @@ const RESUME = {
 		},
 		{
 			title: 'Graphic Design',
-			description:
-				'I design logos, posters, flyers, and other graphic materials for print and digital media. ',
+			description: 'I design logos, posters, flyers, and other graphic materials for print and digital media. ',
 			icon: 'https://img.icons8.com/nolan/48/design.png',
 		},
 	],
@@ -85,7 +84,7 @@ const RESUME = {
 		{
 			name: 'programmingLanguages',
 			title: 'Programming Languages',
-			items: ['HTML & CSS', 'JavaScript', 'TypeScript', 'PHP', 'Python', 'Java', 'C', 'SQL'],
+			items: ['HTML & CSS', 'JavaScript', 'TypeScript', 'PHP', 'Python', 'Java', 'C++', 'SQL'],
 		},
 		{
 			name: 'frameworksAndLibrairies',
@@ -101,7 +100,7 @@ const RESUME = {
 				'Tailwind CSS',
 				'jQuery',
 				'Axios',
-				'Sequelize',
+				'Next.js',
 			],
 		},
 		{
@@ -110,13 +109,9 @@ const RESUME = {
 			items: [
 				'Git',
 				'Github Actions',
-				'NPM',
-				'Yarn',
 				'Docker',
 				'Vite',
 				'Gulp',
-				'ESLint',
-				'Prettier',
 				'Postman',
 				'Figma',
 				'Adobe XD',
@@ -128,8 +123,8 @@ const RESUME = {
 				'Firebase',
 				'Github Pages',
 				'WordPress',
-				'Ngrok',
 				'Vercel',
+				'Strapi',
 				'Hostinger',
 				'LWS.fr',
 			],
