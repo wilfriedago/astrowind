@@ -12,7 +12,7 @@ const { relevantOnly = true } = Astro.props as Props;
 
 {
 	!disabled && links && Array.isArray(links) && (
-		<div class="flex justify-center lg:justify-start">
+		<div class="flex justify-center lg:justify-start social-links">
 			{links.map((link) =>
 				!relevantOnly || link.relevant ? (
 					<a
@@ -20,7 +20,7 @@ const { relevantOnly = true } = Astro.props as Props;
 						set:html={link.name}
 						target="_blank"
 						rel="noopener noreferrer"
-						class="mr-6 hover:underline text-sm lg:text-xs font-medium"
+						class="hover:underline text-sm lg:text-xs font-medium"
 					/>
 				) : (
 					''

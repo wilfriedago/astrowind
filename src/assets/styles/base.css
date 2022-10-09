@@ -9,6 +9,10 @@
 }
 
 @layer utilities {
+	.trigger {
+		@apply mb-8 cursor-pointer text-gray-600 hover:text-gray-900 dark:text-gray-400 hover:dark:text-gray-50 transition-colors duration-300 ease-in-out;
+	}
+
 	.trigger-active {
 		@apply text-gray-900 dark:text-gray-50 transition-colors duration-200 ease-in-out;
 	}
@@ -42,4 +46,8 @@
 .scrollbar-hide {
 	-ms-overflow-style: none; /* IE and Edge */
 	scrollbar-width: none; /* Firefox */
+}
+
+.social-links *:not(:last-of-type) {
+	margin-right: 1.8rem;
 }
