@@ -1,8 +1,7 @@
 name: Github Pages Astro CI
 
 on:
-  # Trigger the workflow every time you push to the `main` branch
-  # Using a different branch name? Replace `main` with your branch’s name
+  # Trigger the workflow every time you push to the `gh-pages` branch
   push:
     branches: [ gh-pages ]
   # Allows you to run this workflow manually from the Actions tab on GitHub.
@@ -13,6 +12,12 @@ permissions:
   contents: read
   pages: write
   id-token: write
+
+# Environment variables
+env:
+  FORMSPREE_ENDPOINT: ${{ secrets.FORMSPREE_ENDPOINT }}  
+  GOOGLE_ANALYTICS_ID: ${{ secrets.GOOGLE_ANALYTICS_ID }}  
+  GOOGLE_SITE_VERIFICATION: ${{ secrets.GOOGLE_SITE_VERIFICATION }}  
 
 jobs:
   build:
