@@ -2,6 +2,7 @@
 import SectionLayout from '~/layouts/SectionLayout.astro';
 
 import { RESUME } from '~/config.mjs';
+import Picture from '~/components/core/Picture.astro';
 
 const { about, skills, services } = RESUME;
 ---
@@ -45,24 +46,15 @@ const { about, skills, services } = RESUME;
 		<div
 			class="flex flex-row sm:flex-col items-start justify-around sm:justify-start w-full sm:w-2/5 p-5 sm:py-10 text-xs font-semibold sm:mx-4 m-0"
 		>
-			<button
-				class="mb-8 cursor-pointer text-gray-500 hover:text-gray-900 hover:dark:text-gray-50 transition-colors duration-300 ease-in-out trigger trigger-active"
-				data-tab="aboutme"
-			>
+			<button class="trigger trigger-active" data-tab="aboutme">
 				<span class="mr-4 sm:inline-flex hidden">/01</span>
 				About Me
 			</button>
-			<button
-				class="mb-8 cursor-pointer text-gray-500 hover:text-gray-900 hover:dark:text-gray-50 transition-colors duration-300 ease-in-out trigger"
-				data-tab="skills"
-			>
+			<button class="trigger" data-tab="skills">
 				<span class="mr-4 sm:inline-flex hidden">/02</span>
 				My Skills
 			</button>
-			<button
-				class="mb-8 cursor-pointer text-gray-500 hover:text-gray-900 hover:dark:text-gray-50 transition-colors duration-300 ease-in-out trigger"
-				data-tab="services"
-			>
+			<button class="trigger" data-tab="services">
 				<span class="mr-4 sm:inline-flex hidden">/03</span>
 				Services
 			</button>
@@ -83,12 +75,7 @@ const { about, skills, services } = RESUME;
 				}
 				{
 					about.files.resume ? (
-						<a
-							href={about.files.resume}
-							class="text-sm text-center sm:text-start font-semibold dark:text-gray-400 mb-4"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
+						<a href={about.files.resume} class="btn" target="_blank" rel="noopener noreferrer">
 							Download Resume
 						</a>
 					) : null
@@ -129,10 +116,9 @@ const { about, skills, services } = RESUME;
 								<div class="flex flex-col items-center justify-center h-full">
 									<div class="tooltip" data-tip={service.description}>
 										<div class="flex items-center justify-center cursor-pointer w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-800">
-											<img src={service.icon} alt={service.title} />
+											<Picture src={service.icon} widths={[48, 48]} alt={service.title} />
 										</div>
 									</div>
-
 									<h3 class="text-gray-800 dark:text-gray-100 text-lg font-semibold mt-4">{service.title}</h3>
 									<div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2" />
 								</div>
