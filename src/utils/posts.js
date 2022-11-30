@@ -57,8 +57,8 @@ export const findPostsByIds = async (ids) => {
 
   const posts = await fetchPosts()
 
-  return ids.reduce(function (r, id) {
-    posts.some(function (post) {
+  return ids.reduce((r, id) => {
+    posts.some((post) => {
       return id === post.id && r.push(post)
     })
     return r
