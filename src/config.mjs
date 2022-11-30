@@ -57,8 +57,7 @@ const RESUME = {
 			},
 		],
 		files: {
-			resume: 'WILFRIED_AGO_RESUME.pdf', // TODO : Upload your resume on the root
-			coverLetter: 'WILFRIED_AGO_COVER_LETTER.pdf', // TODO : Upload your cover letter too
+			resume: 'WILFRIED_AGO_RESUME.pdf',
 		},
 	},
 	services: [
@@ -84,7 +83,7 @@ const RESUME = {
 		{
 			name: 'programmingLanguages',
 			title: 'Programming Languages',
-			items: ['HTML & CSS', 'JavaScript', 'TypeScript', 'PHP', 'Python', 'Java', 'C++', 'SQL'],
+			items: ['HTML & CSS', 'JavaScript', 'TypeScript', 'PHP', 'Python', 'Java', 'C', 'SQL'],
 		},
 		{
 			name: 'frameworksAndLibrairies',
