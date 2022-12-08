@@ -11,3 +11,7 @@ import { SITE } from '~/config.mjs';
 		? document.documentElement.classList.add('dark')
 		: document.documentElement.classList.remove('dark');
 </script>
+<!-- Cloudflare Web Analytics -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={SITE.cloudflareAnalyticsId}
+></script>
+<!-- End Cloudflare Web Analytics -->
