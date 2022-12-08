@@ -83,7 +83,7 @@ const RESUME = {
 		{
 			name: 'programmingLanguages',
 			title: 'Programming Languages',
-			items: ['HTML & CSS', 'JavaScript', 'TypeScript', 'PHP', 'Python', 'Java', 'C', 'SQL'],
+			items: ['HTML & CSS', 'JavaScript', 'TypeScript', 'PHP', 'Python', 'Java', 'C', 'Go'],
 		},
 		{
 			name: 'frameworksAndLibrairies',
