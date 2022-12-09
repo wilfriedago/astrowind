@@ -2,6 +2,7 @@
 import '~/assets/styles/base.css';
 
 import MetaTags from '~/components/core/MetaTags.astro';
+import BasicScripts from '~/components/core/BasicScripts.astro';
 
 const { meta = {} } = Astro.props;
 ---
@@ -12,10 +13,9 @@ const { meta = {} } = Astro.props;
 		<MetaTags {...meta} />
 	</head>
 
-	<body
-		class="antialiased scrollbar-hide text-gray-900 dark:text-slate-300 bg-white dark:bg-slate-900 tracking-tight transition-colors duration-300 ease-in-out"
-	>
+	<body class="antialiased text-gray-900 dark:text-slate-300 tracking-tight bg-white dark:bg-slate-900">
 		<slot />
+		<BasicScripts />
 		<style is:global>
 			img {
 				content-visibility: auto;

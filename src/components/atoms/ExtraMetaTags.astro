@@ -1,10 +1,11 @@
 ---
-import { SITE } from '~/config.mjs';
+import { getRelativeLink } from '~/utils/permalinks';
 ---
 
-<link rel="shortcut icon" href={`${SITE.basePathname}favicon.ico`} />
-<link rel="icon" type="image/svg+xml" href={`${SITE.basePathname}favicon.svg`} />
-<link rel="mask-icon" href={`${SITE.basePathname}favicon.svg`} color="#8D46E7" />
+<link rel="shortcut icon" href={getRelativeLink('/favicon.ico')} />
+<link rel="icon" type="image/svg+xml" href={getRelativeLink('/favicon.svg')} />
+<link rel="mask-icon" href={getRelativeLink('/favicon.svg')} color="#8D46E7" />
+
 <script type="text/javascript">
 	localStorage.theme === 'dark' ||
 	(!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)

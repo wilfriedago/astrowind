@@ -1,9 +1,7 @@
 ---
 import { AstroSeo } from '@astrolib/seo';
-import { getImage } from '@astrojs/image';
 import { GoogleAnalytics } from '@astrolib/analytics';
-import type { ManifestOptions } from 'vite-plugin-pwa';
-
+import { getImage } from '@astrojs/image';
 import { getRelativeUrlByFilePath } from '~/utils/directories';
 
 import defaultImageSrc from '~/assets/images/default.png';
@@ -11,6 +9,7 @@ import defaultImageSrc from '~/assets/images/default.png';
 import { SITE } from '~/config.mjs';
 import Fonts from '../atoms/Fonts.astro';
 import ExtraMetaTags from '../atoms/ExtraMetaTags.astro';
+import SplitbeeAnalytics from './SplitbeeAnalytics.astro';
 
 const { src: defaultImage } = await getImage({
 	src: defaultImageSrc,
@@ -37,36 +36,6 @@ const image =
 		: _image && typeof _image['src'] !== 'undefined'
 		? new URL(getRelativeUrlByFilePath(_image.src), Astro.site)
 		: null;
-
-/**
- * Defines the configuration for PWA webmanifest.
- */
-export const manifest: Partial<ManifestOptions> = {
-	name: SITE.name, // Change this to your website's name.
-	short_name: SITE.name, // Change this to your website's short name.
-	description: 'Astro PWA Starter is an opionated Astro starter for building robust static websites.', // Change this to your websites description.
-	theme_color: '#30E130', // Change this to your primary color.
-	background_color: '#ffffff', // Change this to your background color.
-	display: 'minimal-ui',
-	icons: [
-		{
-			src: '/favicons/favicon-192x192.png',
-			sizes: '192x192',
-			type: 'image/png',
-		},
-		{
-			src: '/favicons/favicon-512x512.png',
-			sizes: '512x512',
-			type: 'image/png',
-		},
-		{
-			src: '/favicons/favicon-512x512.png',
-			sizes: '512x512',
-			type: 'image/png',
-			purpose: 'any maskable',
-		},
-	],
-};
 ---
 
 <meta charset="UTF-8" />
@@ -91,11 +60,11 @@ export const manifest: Partial<ManifestOptions> = {
 					},
 			  ]
 			: undefined,
-		site_name: 'SiteName',
+		// site_name: 'SiteName',
 	}}
 	twitter={{
-		handle: '@handle',
-		site: '@site',
+		// handle: '@handle',
+		// site: '@site',
 		cardType: image ? 'summary_large_image' : undefined,
 	}}
 />
@@ -107,5 +76,7 @@ export const manifest: Partial<ManifestOptions> = {
 
 <!-- Google Analytics -->
 {SITE.googleAnalyticsId && <GoogleAnalytics id={String(SITE.googleAnalyticsId)} partytown={true} />}
+
+{SITE.splitbeeAnalytics?.enabled && <SplitbeeAnalytics {...SITE.splitbeeAnalytics} />}
 
 <ExtraMetaTags />
