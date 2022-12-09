@@ -1,2 +1,3 @@
 User-agent: *
 Disallow:
+Sitemap: https://wilfriedago.me/sitemap-index.xml
