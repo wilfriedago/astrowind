@@ -1,5 +1,5 @@
 ---
-import { CONFIG, CONTACT } from '~/config.mjs';
+import { SITE, CONTACT } from '~/config.mjs';
 
 import SectionLayout from '~/layouts/SectionLayout.astro';
 
@@ -7,7 +7,7 @@ import ContactForm from '~/components/widgets/ContactForm.astro';
 import SocialLinks from '~/components/widgets/SocialLinks.astro';
 
 const { details } = CONTACT;
-const { formspreeEndpoint } = CONFIG;
+const { formspreeEndpoint } = SITE;
 ---
 
 <SectionLayout id="contact">

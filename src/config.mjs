@@ -10,9 +10,7 @@ const SITE = {
 
 	googleAnalyticsId: import.meta.env.GOOGLE_ANALYTICS_ID, // or "G-XXXXXXXXXX",
 	googleSiteVerificationId: import.meta.env.GOOGLE_SITE_VERIFICATION,
-};
-
-const CONFIG = {
+	cloudflareAnalyticsId: import.meta.env.CLOUDFLARE_ANALYTICS_ID,
 	formspreeEndpoint: import.meta.env.FORMSPREE_ENDPOINT,
 };
 
@@ -249,4 +247,4 @@ const BLOG = {
 	},
 };
 
-export { SITE, CONFIG, RESUME, CONTACT, PROJECTS, SOCIALS, BLOG };
+export { SITE, RESUME, CONTACT, PROJECTS, SOCIALS, BLOG };
