@@ -36,36 +36,6 @@ const image =
 		: _image && typeof _image['src'] !== 'undefined'
 		? new URL(getRelativeUrlByFilePath(_image.src), Astro.site)
 		: null;
-
-/**
- * Defines the configuration for PWA webmanifest.
- */
-export const manifest: Partial<ManifestOptions> = {
-	name: SITE.name, // Change this to your website's name.
-	short_name: SITE.name, // Change this to your website's short name.
-	description: SITE.description, // Change this to your websites description.
-	theme_color: '#30E130', // Change this to your primary color.
-	background_color: '#ffffff', // Change this to your background color.
-	display: 'minimal-ui',
-	icons: [
-		{
-			src: '/favicons/favicon-192x192.png',
-			sizes: '192x192',
-			type: 'image/png',
-		},
-		{
-			src: '/favicons/favicon-512x512.png',
-			sizes: '512x512',
-			type: 'image/png',
-		},
-		{
-			src: '/favicons/favicon-512x512.png',
-			sizes: '512x512',
-			type: 'image/png',
-			purpose: 'any maskable',
-		},
-	],
-};
 ---
 
 <meta charset="UTF-8" />
@@ -90,11 +60,11 @@ export const manifest: Partial<ManifestOptions> = {
 					},
 			  ]
 			: undefined,
-		// site_name: 'SiteName',
+		site_name: 'Wilfried AGO Portfolio',
 	}}
 	twitter={{
-		// handle: '@handle',
-		// site: '@site',
+		handle: '@wilfriedago_',
+		site: '@wilfriedago_',
 		cardType: image ? 'summary_large_image' : undefined,
 	}}
 />

@@ -1,3 +1,5 @@
+import { UiConfig, LocalStorage } from "./utils/observers";
+
 const SITE = {
 	name: 'Wilfried AGO | Frontend Developer',
 
@@ -21,7 +23,7 @@ const RESUME = {
 		summary:
 			'Detail-oriented graphic designer and front-end developer. I believe that a great design is the result of understanding a problem to its core and solving it with a simple and elegant solution. \n\n Passionate about visual design, web development, and user experience. I looking for an internship or a job as a web developer or UI/UX designer. I am also open to freelance projects. Feel free to contact if you have any questions or if you want to work with me.',
 		contact: {
-			email: 'contact@wilfriedago.me',
+			email: 'wilfriedago@pm.me',
 			phone: '+229 62 000 975',
 			address: 'Kouhounou, Cotonou Benin',
 		},

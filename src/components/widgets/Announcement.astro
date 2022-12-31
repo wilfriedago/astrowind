@@ -1,28 +1,36 @@
 ---
+import Icon from 'astro-icon';
 import { getPermalink } from '~/utils/permalinks';
 ---
 
+<script>
+	import { SITE } from '~/config.mjs';
+
+	if (SITE.uiConfig.announcementDismissed) {
+		document.getElementById('announcement').classList.add('md:hidden');
+	}
+
+	document.getElementById('dismiss-btn').addEventListener('click', () => {
+		document.getElementById('announcement').classList.add('md:hidden');
+		SITE.uiConfig.announcementDismissed = true;
+	});
+</script>
+
 <div
-	class="hidden md:block bg-primary-100 dark:bg-slate-800 dark:border-slate-800 dark:text-slate-400 border-b border-primary-100 text-sm px-3 py-2 text-gray-800 overflow-hidden whitespace-nowrap text-ellipsis"
+	id="announcement"
+	class="hidden md:flex bg-primary-100 dark:bg-slate-800 dark:border-slate-800 dark:text-slate-400 border-b border-primary-100 text-sm px-3 py-2 text-gray-800 overflow-hidden whitespace-nowrap text-ellipsis"
 >
-	<span class="text-xs py-0.5 px-1 bg-primary-200 dark:bg-slate-600 font-semibold">NEW</span>
-	<a
-		href={getPermalink('useful-resources-to-create-websites', 'post')}
-		class="hover:underline text-gray-700 dark:text-slate-400"
-		>Useful tools and resources to create a professional website »</a
+	<span
+		class="text-xs py-0.5 px-1 bg-primary-200 dark:bg-slate-700 dark:text-slate-300 font-semibold mr-2 flex-none rounded ml-4"
+		>NEW POST</span
 	>
 	<a
-		target="_blank"
-		rel="noopener"
-		class="float-right"
-		title="If you like AstroWind, give us a star."
-		href="https://github.com/onwidget/astrowind"
+		href={getPermalink('useful-vscode-extensions', 'post')}
+		class="hover:underline text-gray-700 dark:text-slate-400 flex-1"
 	>
-		<img
-			src="https://img.shields.io/github/stars/onwidget/astrowind.svg?style=social&label=Stars&maxAge=86400"
-			alt="Follow @onWidget"
-			width="84"
-			height="20"
-		/>
+		Useful VSCode Extensions for Web Development »
 	</a>
+	<button title="Dismiss annoucement" id="dismiss-btn" class="flex-none">
+		<Icon name="line-md:close" class="w-5 h-5" />
+	</button>
 </div>

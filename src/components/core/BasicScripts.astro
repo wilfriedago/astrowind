@@ -2,19 +2,10 @@
 ---
 
 <script is:inline>
-	// Set "light" theme as default
-	// if (!localStorage.theme) {
-	//   localStorage.theme = "light";
-	// }
-
-	if (
-		localStorage.theme === 'dark' ||
-		(!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-	) {
-		document.documentElement.classList.add('dark');
-	} else {
-		document.documentElement.classList.remove('dark');
-	}
+	localStorage.theme === 'dark' ||
+	(!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+		? document.documentElement.classList.add('dark')
+		: document.documentElement.classList.remove('dark');
 
 	function attachEvent(selector, event, fn) {
 		const matches = document.querySelectorAll(selector);
