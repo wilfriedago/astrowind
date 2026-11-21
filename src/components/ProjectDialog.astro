@@ -1,0 +1,112 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ProjectCard from './ProjectCard.astro';
+
+/**
+ * Modal that shows one project at a time with prev/next navigation.
+ * Opened by any element with `data-project-open="<index>"`; without JS
+ * those elements are plain links to the standalone project pages.
+ */
+interface Props {
+	projects: CollectionEntry<'projects'>[];
+}
+
+const { projects } = Astro.props;
+---
+
+<dialog class="project-dialog" aria-label="Project details" data-project-dialog>
+	{
+		projects.map((project, index) => (
+			<div class="panel" hidden={index !== 0}>
+				<ProjectCard project={project} index={index} total={projects.length} mode="dialog" />
+			</div>
+		))
+	}
+</dialog>
+
+<script>
+	const dialog = document.querySelector<HTMLDialogElement>('[data-project-dialog]');
+
+	if (dialog) {
+		const panels = Array.from(dialog.querySelectorAll<HTMLElement>('.panel'));
+		let current = 0;
+
+		const show = (index: number) => {
+			current = Math.max(0, Math.min(index, panels.length - 1));
+			panels.forEach((panel, i) => (panel.hidden = i !== current));
+		};
+
+		document.querySelectorAll<HTMLElement>('[data-project-open]').forEach((trigger) => {
+			trigger.addEventListener('click', (event) => {
+				// Let modified clicks (new tab, etc.) follow the link.
+				if (event instanceof MouseEvent && (event.metaKey || event.ctrlKey || event.shiftKey)) return;
+				event.preventDefault();
+				show(Number(trigger.dataset.projectOpen));
+				dialog.showModal();
+			});
+		});
+
+		dialog.addEventListener('click', (event) => {
+			const target = event.target as HTMLElement;
+			if (target === dialog) return dialog.close(); // backdrop
+			if (target.closest('[data-project-close]')) return dialog.close();
+			const nav = target.closest<HTMLButtonElement>('[data-project-nav]');
+			if (nav && !nav.disabled) {
+				show(current + (nav.dataset.projectNav === 'next' ? 1 : -1));
+				// Keep keyboard focus on the matching control of the new panel.
+				panels[current].querySelector<HTMLButtonElement>(`[data-project-nav="${nav.dataset.projectNav}"]:not(:disabled)`)?.focus();
+			}
+		});
+
+		dialog.addEventListener('keydown', (event) => {
+			if (event.key === 'ArrowRight') show(current + 1);
+			if (event.key === 'ArrowLeft') show(current - 1);
+		});
+	}
+</script>
+
+<style>
+	.project-dialog {
+		width: min(820px, calc(100% - 2 * var(--gutter)));
+		max-width: none;
+		max-height: calc(100% - 2 * var(--gutter));
+		padding: 0;
+		border: 0;
+		background: none;
+		color: var(--c-text);
+		overflow: visible;
+	}
+
+	.project-dialog::backdrop {
+		background: var(--c-scrim);
+		backdrop-filter: blur(6px);
+	}
+
+	.project-dialog[open] {
+		animation: rise 400ms var(--ease-out);
+	}
+
+	.project-dialog[open]::backdrop {
+		animation: fade 300ms ease;
+	}
+
+	.panel {
+		max-height: calc(100svh - 2 * var(--gutter));
+		overflow-y: auto;
+		border-radius: 4px;
+		box-shadow: 0 30px 80px rgb(0 0 0 / 0.6);
+	}
+
+	@keyframes rise {
+		from {
+			opacity: 0;
+			transform: translateY(1rem);
+		}
+	}
+
+	@keyframes fade {
+		from {
+			opacity: 0;
+		}
+	}
+</style>

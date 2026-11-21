@@ -1,35 +1,473 @@
 ---
-import { SITE } from '~/config.mjs';
-import { getCanonical, getHomePermalink } from '~/utils/permalinks';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import ProjectDialog from '../components/ProjectDialog.astro';
+import ProjectRow from '../components/ProjectRow.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import SectionRails from '../components/SectionRails.astro';
+import Socials from '../components/Socials.astro';
+import { site } from '../data/site';
+import { getFeaturedProjects } from '../lib/projects';
 
-import Layout from '~/layouts/PageLayout.astro';
-
-import Hero from '~/components/containers/Hero.astro';
-import Portfolio from '~/components/containers/Portfolio.astro';
-import About from '~/components/containers/About.astro';
-import Contact from '~/components/containers/Contact.astro';
-
-import Pagination from '~/components/widgets/Pagination.astro';
-
-const meta = {
-	title: SITE.title,
-	description: SITE.description,
-	canonical: getCanonical(getHomePermalink()),
-};
+const featured = await getFeaturedProjects();
+const year = new Date().getFullYear();
+const { intro, projects, about, contact } = site;
 ---
 
-<Layout {meta}>
-	<!--======= HERO ========-->
-	<Hero />
+<Base>
+	<section id="introduction" class="section intro" data-section aria-labelledby="intro-title">
+		<div class="intro-inner">
+			<span class="dots intro-dots" aria-hidden="true"></span>
+			<p class="eyebrow">{intro.eyebrow}</p>
+			<h1 id="intro-title" class="intro-title">{intro.headline}</h1>
+			<p class="intro-body">{intro.body}</p>
+		</div>
+	</section>
 
-	<!--======= PORTFOLIO ========-->
-	<Portfolio />
+	<section id="projects" class="section centered" data-section aria-labelledby="projects-title">
+		<SectionHeading id="projects-title" title={projects.title} subtitle={projects.subtitle} />
+		<ol class="project-list">
+			{featured.map((project, index) => <ProjectRow project={project} index={index} />)}
+		</ol>
+		<a href={projects.more.href} class="arrow-link" target="_blank" rel="noopener noreferrer">
+			{projects.more.label}
+			<Icon name="arrow-right" />
+		</a>
+	</section>
 
-	<!--======= ABOUT ========-->
-	<About />
+	<section id="about" class="section centered" data-section aria-labelledby="about-title">
+		<SectionHeading id="about-title" title={about.title} subtitle={about.subtitle} />
+		<div class="about-grid" data-tabs>
+			<div class="tab-list" role="tablist" aria-label={about.title}>
+				<span class="dots tab-dots" aria-hidden="true"></span>
+				{
+					about.tabs.map((tab, i) => (
+						<button
+							type="button"
+							role="tab"
+							id={`about-tab-${i}`}
+							aria-controls={`about-panel-${i}`}
+							aria-selected={i === 0 ? 'true' : 'false'}
+							tabindex={i === 0 ? 0 : -1}
+							class="tab"
+						>
+							<span class="tab-index">/{String(i + 1).padStart(2, '0')}</span>
+							<span class="tab-label">{tab.label}</span>
+						</button>
+					))
+				}
+			</div>
+			<div class="panels">
+				{
+					about.tabs.map((tab, i) => (
+						<div class="tab-panel" role="tabpanel" id={`about-panel-${i}`} aria-labelledby={`about-tab-${i}`}>
+							<div class="panel-heading">
+								<h3 class="panel-title">{tab.heading}</h3>
+								<p class="panel-subtitle">{tab.subheading}</p>
+							</div>
+							{tab.kind === 'bio' ? (
+								<div class="bio">
+									{tab.paragraphs.map((p) => (
+										<p>{p}</p>
+									))}
+								</div>
+							) : (
+								<dl class:list={['grid', tab.kind]}>
+									{tab.items.map((item) => (
+										<div class="grid-item">
+											<dt>
+												<span class="grid-key">{item.key}</span>
+												<span class="grid-title">{item.title}</span>
+											</dt>
+											<dd class="grid-body">{item.body}</dd>
+										</div>
+									))}
+								</dl>
+							)}
+						</div>
+					))
+				}
+			</div>
+		</div>
+	</section>
 
-	<!--======= CONTACT ========-->
-	<Contact />
+	<section id="contact" class="section contact" data-section aria-labelledby="contact-title">
+		<div class="contact-inner">
+			<div>
+				<h2 id="contact-title" class="contact-title">{contact.title}</h2>
+				<p class="contact-prompt">{contact.prompt}</p>
+			</div>
+			<a class="email" href={`mailto:${contact.email}`}>{contact.email}</a>
+			<div class="follow">
+				<p class="follow-label">{contact.followLabel}</p>
+				<Socials variant="follow" />
+			</div>
+		</div>
+		<footer class="footer">
+			<span>{year} - {site.name}</span>
+			<span>{contact.credit}</span>
+		</footer>
+	</section>
 
-	<Pagination />
-</Layout>
+	<ProjectDialog projects={featured} />
+	<SectionRails slot="chrome" total={4} />
+</Base>
+
+<script>
+	// Accessible tabs for the About section (all panels stay visible without JS).
+	const root = document.querySelector<HTMLElement>('[data-tabs]');
+	if (root) {
+		const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+		const panels = Array.from(root.querySelectorAll<HTMLElement>('[role="tabpanel"]'));
+
+		const select = (index: number, focus = false) => {
+			tabs.forEach((tab, i) => {
+				const active = i === index;
+				tab.setAttribute('aria-selected', String(active));
+				tab.tabIndex = active ? 0 : -1;
+				panels[i].hidden = !active;
+			});
+			if (focus) tabs[index].focus();
+		};
+
+		tabs.forEach((tab, i) => {
+			tab.addEventListener('click', () => select(i));
+			tab.addEventListener('keydown', (event) => {
+				const keys: Record<string, number> = {
+					ArrowDown: (i + 1) % tabs.length,
+					ArrowRight: (i + 1) % tabs.length,
+					ArrowUp: (i - 1 + tabs.length) % tabs.length,
+					ArrowLeft: (i - 1 + tabs.length) % tabs.length,
+					Home: 0,
+					End: tabs.length - 1,
+				};
+				if (event.key in keys) {
+					event.preventDefault();
+					select(keys[event.key], true);
+				}
+			});
+		});
+
+		select(0);
+		root.setAttribute('data-tabs-ready', '');
+	}
+</script>
+
+<style>
+	.section {
+		position: relative;
+		isolation: isolate;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		min-height: 100svh;
+		padding: 7rem var(--rail);
+	}
+
+	.centered {
+		align-items: center;
+		justify-content: flex-start;
+		padding-bottom: 5.5rem;
+	}
+
+	/* Introduction */
+
+	.intro-inner {
+		position: relative;
+		max-width: 35rem;
+	}
+
+	.intro-dots {
+		display: block;
+		width: 149px;
+		height: 23px;
+		margin-bottom: 0.1875rem;
+	}
+
+	.eyebrow {
+		font-family: var(--font-mono);
+		font-size: 0.625rem;
+		font-weight: 500;
+	}
+
+	.intro-title {
+		margin-top: 0.8125rem;
+		font-size: clamp(2.5rem, 6vw, 3rem);
+	}
+
+	.intro-body {
+		margin-top: 1.375rem;
+		font-size: 0.6875rem;
+		line-height: 2.1;
+		letter-spacing: 1.4px;
+		color: var(--c-faint);
+	}
+
+	/* Projects */
+
+	.project-list {
+		display: grid;
+		gap: 1.75rem;
+		width: 100%;
+		max-width: 758px;
+		margin: 5.75rem 0 3.5rem;
+		padding: 0;
+	}
+
+	/* The first row is "active" until another one is hovered or focused. */
+	.project-list :global(.row:not(:first-child)),
+	.project-list:is(:hover, :focus-within) :global(.row) {
+		opacity: 0.45;
+	}
+
+	.project-list :global(.row:is(:hover, :focus-within)) {
+		opacity: 1;
+	}
+
+	/* About */
+
+	.about-grid {
+		display: grid;
+		grid-template-columns: 17.25rem minmax(0, 33.125rem);
+		width: 100%;
+		max-width: 50.375rem;
+		margin-top: 5.8rem;
+	}
+
+	.tab-list {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 1.3125rem;
+		padding-top: 1.1875rem;
+	}
+
+	.tab-dots {
+		position: absolute;
+		top: 0;
+		left: 2.8125rem;
+		width: 149px;
+		height: 23px;
+	}
+
+	.tab {
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		padding: 0 0 0.125rem;
+		border: 0;
+		background: none;
+		font-size: 0.75rem;
+		color: var(--c-subtle);
+		cursor: pointer;
+		transition: color 200ms ease;
+	}
+
+	.tab-index {
+		width: 2.75rem;
+		font-family: var(--font-mono);
+		font-size: 0.6875rem;
+		text-align: left;
+	}
+
+	.tab::after {
+		content: '';
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: -0.125rem;
+		height: 2px;
+		background: currentColor;
+		transform: scaleX(0);
+		transform-origin: left;
+		transition: transform 300ms var(--ease-out);
+	}
+
+	.tab:hover,
+	.tab[aria-selected='true'] {
+		color: var(--c-text);
+	}
+
+	.tab[aria-selected='true'] .tab-label {
+		font-weight: 600;
+	}
+
+	.tab[aria-selected='true']::after {
+		transform: scaleX(1);
+	}
+
+	.panels {
+		display: grid;
+		gap: 3rem;
+	}
+
+	[data-tabs-ready] .panels {
+		gap: 0;
+	}
+
+	.tab-panel[hidden] {
+		display: none;
+	}
+
+	.tab-panel:not([hidden]) {
+		animation: rise 450ms var(--ease-out);
+	}
+
+	.panel-heading {
+		margin-bottom: 2.25rem;
+	}
+
+	.panel-title {
+		font-size: 1.125rem;
+		font-weight: 600;
+	}
+
+	.panel-subtitle {
+		margin-top: 0.125rem;
+		font-family: var(--font-mono);
+		font-size: 0.625rem;
+		color: var(--c-subtle);
+	}
+
+	.bio {
+		display: grid;
+		gap: 1.45em;
+		font-size: 0.8125rem;
+		line-height: 1.45;
+		color: var(--c-subtle);
+		white-space: pre-line;
+	}
+
+	.grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 2rem 2.5rem;
+		margin: 0;
+	}
+
+	.grid-item {
+		display: grid;
+		align-content: start;
+		gap: 0.5rem;
+	}
+
+	.grid-item dt {
+		display: flex;
+		align-items: baseline;
+		gap: 0.625rem;
+		line-height: 1.2;
+	}
+
+	.grid-key {
+		font-family: var(--font-mono);
+		font-size: 0.625rem;
+		color: var(--c-dim);
+	}
+
+	.grid-title {
+		font-size: 0.875rem;
+		font-weight: 600;
+	}
+
+	.grid-body {
+		margin: 0;
+		font-size: 0.75rem;
+		line-height: 1.6;
+		color: var(--c-subtle);
+		white-space: pre-line;
+	}
+
+	.stack .grid-body {
+		font-family: var(--font-mono);
+		font-size: 0.6875rem;
+	}
+
+	@keyframes rise {
+		from {
+			opacity: 0;
+			transform: translateY(0.5rem);
+		}
+	}
+
+	/* Contact */
+
+	.contact {
+		justify-content: space-between;
+		padding-top: 12.1875rem;
+		padding-bottom: 4.75rem;
+	}
+
+	.contact-inner {
+		display: grid;
+		justify-items: start;
+	}
+
+	.contact-title {
+		font-size: clamp(2.25rem, 5vw, 2.875rem);
+	}
+
+	.contact-prompt {
+		margin-top: 0.6875rem;
+		line-height: 1.2;
+		font-size: 0.625rem;
+		color: var(--c-faint);
+	}
+
+	.email {
+		margin-top: 5rem;
+		font-size: clamp(1.5rem, 4.5vw, 2.1875rem);
+		line-height: 1.2;
+		overflow-wrap: anywhere;
+		background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+		transition: background-size 400ms var(--ease-out);
+	}
+
+	.email:hover {
+		background-size: 100% 1px;
+	}
+
+	.follow {
+		margin-top: 6rem;
+	}
+
+	.follow-label {
+		margin-bottom: 0.5rem;
+		font-size: 0.625rem;
+		color: var(--c-faint);
+	}
+
+	.footer {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 1rem;
+		max-width: 49.75rem;
+		margin-top: 5rem;
+		font-family: var(--font-mono);
+		font-size: 0.625rem;
+		color: var(--c-faint);
+	}
+
+	@media (max-width: 47.99rem) {
+		.about-grid {
+			grid-template-columns: 1fr;
+			gap: 2.5rem;
+		}
+
+		.tab-list {
+			flex-direction: row;
+			flex-wrap: wrap;
+			gap: 1rem 1.5rem;
+		}
+
+		.tab-index {
+			width: auto;
+			margin-right: 0.5rem;
+		}
+
+		.grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

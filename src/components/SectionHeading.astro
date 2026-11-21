@@ -1,0 +1,71 @@
+---
+interface Props {
+	title: string;
+	subtitle?: string;
+	/** Heading level; the home page uses h2, standalone pages use h1. */
+	as?: 'h1' | 'h2';
+	id?: string;
+}
+
+const { title, subtitle, as: Tag = 'h2', id } = Astro.props;
+---
+
+<div class="heading">
+	<div class="title-wrap">
+		<span class="ghost" aria-hidden="true">{title}</span>
+		<span class="dots strip" aria-hidden="true"></span>
+		<Tag class="title" id={id}>{title}</Tag>
+	</div>
+	{subtitle && <p class="subtitle">{subtitle}</p>}
+</div>
+
+<style>
+	.heading {
+		display: grid;
+		justify-items: center;
+		gap: 2.8125rem;
+		text-align: center;
+	}
+
+	.title-wrap {
+		position: relative;
+		display: grid;
+		place-items: center;
+	}
+
+	.ghost {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		font-size: clamp(3.5rem, 8vw, 6rem);
+		font-weight: 800;
+		line-height: 1.2;
+		text-transform: uppercase;
+		white-space: nowrap;
+		color: rgb(255 255 255 / 0.08);
+		transform: translate(-50%, -50%);
+		user-select: none;
+	}
+
+	.title {
+		position: relative;
+		font-size: clamp(2.25rem, 4vw, 2.875rem);
+	}
+
+	.strip {
+		position: absolute;
+		top: calc(100% - 0.25rem);
+		left: 50%;
+		width: 303px;
+		max-width: 80vw;
+		height: 23px;
+		transform: translateX(-50%);
+	}
+
+	.subtitle {
+		font-family: var(--font-mono);
+		font-size: 0.6875rem;
+		letter-spacing: 1px;
+		color: var(--c-muted);
+	}
+</style>

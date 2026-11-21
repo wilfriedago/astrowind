@@ -1,0 +1,419 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+
+/**
+ * Project details card ("Project Dialog" in the design).
+ * Used inside the home page dialog (`mode="dialog"`, buttons drive navigation)
+ * and on standalone project pages (`mode="page"`, plain links).
+ */
+interface Props {
+	project: CollectionEntry<'projects'>;
+	index: number;
+	total: number;
+	mode: 'dialog' | 'page';
+	prevHref?: string;
+	nextHref?: string;
+	headingLevel?: 'h1' | 'h2';
+}
+
+const { project, index, total, mode, prevHref, nextHref, headingLevel: Heading = 'h2' } = Astro.props;
+const { title, description, role, year, stack, tags, highlights, cover, url, repo } = project.data;
+const pad = (n: number) => String(n).padStart(2, '0');
+const titleId = `project-title-${project.id}`;
+const hasPrev = index > 0;
+const hasNext = index < total - 1;
+---
+
+<article class="project" aria-labelledby={titleId} data-project-panel={index}>
+	<div class="hero">
+		{
+			cover ? (
+				<Image src={cover} alt="" widths={[820, 1640]} sizes="(min-width: 52rem) 820px, 100vw" />
+			) : (
+				<span class="hero-placeholder" />
+			)
+		}
+		{
+			mode === 'dialog' ? (
+				<button type="button" class="close" data-project-close>
+					<Icon name="x" size={14} />
+					<span class="visually-hidden">Close project</span>
+				</button>
+			) : (
+				<a href="/#projects" class="close">
+					<Icon name="x" size={14} />
+					<span class="visually-hidden">Back to projects</span>
+				</a>
+			)
+		}
+	</div>
+
+	<div class="body">
+		<div class="main">
+			<div class="heading">
+				<p class="index">// project {pad(index + 1)}</p>
+				<Heading class="title" id={titleId}>{title}</Heading>
+				<p class="tags">{tags.join(' · ')}</p>
+			</div>
+			<p class="description">{description}</p>
+			{
+				highlights.length > 0 && (
+					<ul class="highlights">
+						{highlights.map((item) => (
+							<li>{item}</li>
+						))}
+					</ul>
+				)
+			}
+		</div>
+
+		<dl class="meta">
+			<div>
+				<dt>Role</dt>
+				<dd class="value">{role}</dd>
+			</div>
+			<div>
+				<dt>Year</dt>
+				<dd class="value">{year}</dd>
+			</div>
+			{
+				stack.length > 0 && (
+					<div class="stack">
+						<dt>Stack</dt>
+						<dd>
+							<ul>
+								{stack.map((item) => (
+									<li>{item}</li>
+								))}
+							</ul>
+						</dd>
+					</div>
+				)
+			}
+			{
+				(repo || url) && (
+					<div class="actions">
+						<dt class="visually-hidden">Links</dt>
+						{repo && (
+							<dd>
+								<a class="button primary" href={repo} target="_blank" rel="noopener noreferrer">
+									<Icon name="github" size={14} />
+									View source
+								</a>
+							</dd>
+						)}
+						{url && (
+							<dd>
+								<a class="button" href={url} target="_blank" rel="noopener noreferrer">
+									Live demo
+									<Icon name="arrow-up-right" size={14} />
+								</a>
+							</dd>
+						)}
+					</div>
+				)
+			}
+		</dl>
+	</div>
+
+	<nav class="footer" aria-label="Project navigation">
+		{
+			mode === 'dialog' ? (
+				<button type="button" class="pager-link" data-project-nav="prev" disabled={!hasPrev}>
+					<Icon name="arrow-left" size={14} />
+					Prev
+				</button>
+			) : hasPrev && prevHref ? (
+				<a class="pager-link" href={prevHref}>
+					<Icon name="arrow-left" size={14} />
+					Prev
+				</a>
+			) : (
+				<span class="pager-link" aria-disabled="true">
+					<Icon name="arrow-left" size={14} />
+					Prev
+				</span>
+			)
+		}
+		<span class="pager">{pad(index + 1)} / {pad(total)}</span>
+		{
+			mode === 'dialog' ? (
+				<button type="button" class="pager-link" data-project-nav="next" disabled={!hasNext}>
+					Next
+					<Icon name="arrow-right" size={14} />
+				</button>
+			) : hasNext && nextHref ? (
+				<a class="pager-link" href={nextHref}>
+					Next
+					<Icon name="arrow-right" size={14} />
+				</a>
+			) : (
+				<span class="pager-link" aria-disabled="true">
+					Next
+					<Icon name="arrow-right" size={14} />
+				</span>
+			)
+		}
+	</nav>
+</article>
+
+<style>
+	.project {
+		width: 100%;
+		max-width: 820px;
+		overflow: hidden;
+		border: 1px solid rgb(255 255 255 / 0.12);
+		border-radius: 4px;
+		background: var(--c-surface);
+		box-shadow: 0 30px 80px rgb(0 0 0 / 0.6);
+	}
+
+	.hero {
+		position: relative;
+		height: 200px;
+	}
+
+	.hero :global(img),
+	.hero-placeholder {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.hero-placeholder {
+		background: linear-gradient(135deg, #2a3150, var(--c-surface));
+	}
+
+	.close {
+		position: absolute;
+		top: 1rem;
+		right: 1rem;
+		z-index: 1;
+		display: grid;
+		place-items: center;
+		width: 2rem;
+		height: 2rem;
+		padding: 0;
+		border: 1px solid rgb(255 255 255 / 0.2);
+		border-radius: 50%;
+		background: rgb(11 13 24 / 0.7);
+		cursor: pointer;
+		transition: background-color 200ms ease;
+	}
+
+	.close:hover {
+		background: rgb(11 13 24 / 0.9);
+	}
+
+	.body {
+		display: grid;
+		grid-template-columns: minmax(0, 30rem) 13.75rem;
+		justify-content: space-between;
+		gap: 2rem 3rem;
+		padding: 0.25rem 2.25rem 2rem;
+	}
+
+	.main {
+		display: grid;
+		align-content: start;
+		gap: 1rem;
+	}
+
+	.heading {
+		display: grid;
+		gap: 0.375rem;
+	}
+
+	.index,
+	.tags {
+		font-family: var(--font-mono);
+		font-size: 0.625rem;
+	}
+
+	.index {
+		color: var(--c-faint);
+	}
+
+	.tags {
+		color: var(--c-subtle);
+	}
+
+	.title {
+		font-size: 1.625rem;
+		font-weight: 600;
+	}
+
+	.description {
+		font-size: 0.8125rem;
+		line-height: 1.6;
+		color: var(--c-text-70);
+	}
+
+	.highlights {
+		display: grid;
+		gap: 0.625rem;
+		margin: 0;
+		padding: 0.375rem 0 0;
+		list-style: none;
+	}
+
+	.highlights li {
+		display: grid;
+		grid-template-columns: 0.875rem 1fr;
+		align-items: center;
+		gap: 0.75rem;
+		font-size: 0.75rem;
+		line-height: 1.25;
+		color: var(--c-text-90);
+	}
+
+	.highlights li::before {
+		content: '';
+		height: 1px;
+		background: var(--c-line-strong);
+	}
+
+	.meta {
+		display: grid;
+		align-content: start;
+		gap: 1.125rem;
+		margin: 0;
+		padding-left: 1.5rem;
+		border-left: 1px solid var(--c-line-soft);
+	}
+
+	.meta > div {
+		display: grid;
+		gap: 0.25rem;
+	}
+
+	dt {
+		font-family: var(--font-mono);
+		font-size: 0.5625rem;
+		letter-spacing: 1.5px;
+		text-transform: uppercase;
+		color: var(--c-dim);
+	}
+
+	dd {
+		margin: 0;
+	}
+
+	.value {
+		font-size: 0.8125rem;
+		font-weight: 500;
+	}
+
+	.meta > .stack {
+		gap: 0.5rem;
+	}
+
+	.stack ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		font-family: var(--font-mono);
+		font-size: 0.6875rem;
+		line-height: 1.7;
+		color: var(--c-text-80);
+	}
+
+	.meta > .actions {
+		gap: 0.5rem;
+		padding-top: 0.375rem;
+	}
+
+	.button {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		padding: 0.625rem 0.875rem;
+		border: 1px solid var(--c-line);
+		border-radius: 2px;
+		font-size: 0.75rem;
+		font-weight: 500;
+		transition:
+			background-color 200ms ease,
+			border-color 200ms ease;
+	}
+
+	.button:hover {
+		border-color: var(--c-text);
+	}
+
+	.button.primary {
+		border-color: var(--c-text);
+		background: var(--c-text);
+		color: var(--c-on-light);
+		font-weight: 600;
+	}
+
+	.button.primary:hover {
+		background: rgb(255 255 255 / 0.85);
+	}
+
+	.footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 0.875rem 2.25rem;
+		border-top: 1px solid var(--c-line-faint);
+	}
+
+	.pager-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0;
+		border: 0;
+		background: none;
+		font-family: var(--font-mono);
+		font-size: 0.625rem;
+		text-transform: uppercase;
+		color: var(--c-text-70);
+		cursor: pointer;
+		transition: color 200ms ease;
+	}
+
+	.pager-link :global(svg) {
+		color: var(--c-text);
+	}
+
+	.pager-link:hover:not(:disabled, [aria-disabled='true']) {
+		color: var(--c-text);
+	}
+
+	.pager-link:disabled,
+	.pager-link[aria-disabled='true'] {
+		opacity: 0.3;
+		cursor: default;
+	}
+
+	.pager {
+		font-family: var(--font-mono);
+		font-size: 0.625rem;
+		color: var(--c-faint);
+	}
+
+	@media (max-width: 47.99rem) {
+		.body {
+			grid-template-columns: 1fr;
+			padding-inline: 1.5rem;
+		}
+
+		.meta {
+			padding: 1.5rem 0 0;
+			border-left: 0;
+			border-top: 1px solid var(--c-line-soft);
+		}
+
+		.footer {
+			padding-inline: 1.5rem;
+		}
+	}
+</style>

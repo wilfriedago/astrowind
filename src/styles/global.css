@@ -1,0 +1,222 @@
+:root {
+  color-scheme: dark;
+
+  /* Colors — taken from design/main.pen */
+  --c-bg: #15172a;
+  --c-surface: #1a1d2b;
+  --c-scrim: rgb(11 13 24 / 0.85);
+  --c-text: #ffffff;
+  --c-text-90: rgb(255 255 255 / 0.9);
+  --c-text-80: rgb(255 255 255 / 0.8);
+  --c-text-75: rgb(255 255 255 / 0.75);
+  --c-text-70: rgb(255 255 255 / 0.7);
+  --c-muted: rgb(255 255 255 / 0.65);
+  --c-subtle: rgb(255 255 255 / 0.6);
+  --c-faint: rgb(255 255 255 / 0.5);
+  --c-dim: rgb(255 255 255 / 0.4);
+  --c-line-strong: rgb(255 255 255 / 0.5);
+  --c-line: rgb(255 255 255 / 0.25);
+  --c-line-soft: rgb(255 255 255 / 0.1);
+  --c-line-faint: rgb(255 255 255 / 0.08);
+  --c-glass: rgb(255 255 255 / 0.2);
+  --c-glass-hover: rgb(255 255 255 / 0.3);
+  --c-on-light: #14172a;
+
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --rail: clamp(4.5rem, 16.5vw, 12.5rem);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Side rails are hidden on smaller screens, so content can use the plain gutter. */
+@media (max-width: 63.99rem) {
+  :root {
+    --rail: var(--gutter);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--c-text);
+  background-color: var(--c-bg);
+  background-image:
+    radial-gradient(
+      ellipse 25% 50% at 102% 20%,
+      rgb(90 74 78 / 0.8),
+      transparent
+    ),
+    radial-gradient(
+      ellipse 60% 60% at 55% 30%,
+      rgb(42 49 80 / 0.67),
+      transparent
+    ),
+    linear-gradient(180deg, #1b1f33 0%, #15172a 100%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Film grain overlay */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+p {
+  margin: 0;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--c-text);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+::selection {
+  background: rgb(255 255 255 / 0.85);
+  color: var(--c-bg);
+}
+
+/* Utilities */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+/*
+ * Dotted texture: 2px dots on a 7px grid, every third column brighter.
+ * Size the element in multiples of 7px for whole dots.
+ */
+.dots {
+  background-image:
+    radial-gradient(
+      circle at 1px 1px,
+      rgb(255 255 255 / 0.4) 1px,
+      transparent 1.25px
+    ),
+    radial-gradient(
+      circle at 1px 1px,
+      rgb(255 255 255 / 0.18) 1px,
+      transparent 1.25px
+    );
+  background-size:
+    21px 7px,
+    7px 7px;
+  background-position:
+    14px 0,
+    0 0;
+  pointer-events: none;
+}
+
+/* Round translucent icon button (menu, scroll arrow) */
+.glass-button {
+  display: inline-grid;
+  place-items: center;
+  width: 2.375rem;
+  height: 2.375rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--c-glass);
+  cursor: pointer;
+  transition: background-color 200ms ease;
+}
+
+.glass-button:hover {
+  background: var(--c-glass-hover);
+}
+
+/* "MORE ON GITHUB →" style link */
+.arrow-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  color: var(--c-text-75);
+  transition: color 200ms ease;
+}
+
+.arrow-link svg {
+  transition: transform 300ms var(--ease-out);
+}
+
+.arrow-link:hover {
+  color: var(--c-text);
+}
+
+.arrow-link:hover svg {
+  transform: translateX(0.25rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
