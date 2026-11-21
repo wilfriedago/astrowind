@@ -16,12 +16,12 @@ bun run preview  # serve the production build locally
 
 ## Editing content
 
-| What                                   | Where                              |
-| -------------------------------------- | ---------------------------------- |
-| Name, intro, about tabs, email, socials | `src/data/site.ts`                 |
-| Projects (one Markdown file each)      | `src/content/projects/*.md`        |
-| Project frontmatter schema             | `src/content.config.ts`            |
-| Colors, spacing, global styles         | `src/styles/global.css`            |
+| What                                    | Where                       |
+| --------------------------------------- | --------------------------- |
+| Name, intro, about tabs, email, socials | `src/data/site.ts`          |
+| Projects (one Markdown file each)       | `src/content/projects/*.md` |
+| Project frontmatter schema              | `src/content.config.ts`     |
+| Colors, spacing, global styles          | `src/styles/global.css`     |
 
 A project's frontmatter looks like this:
 
@@ -30,16 +30,16 @@ title: My Project
 description: One or two sentences about the project.
 role: Lead Engineer
 year: 2026
-order: 1          # lower comes first
-featured: true    # show on the home page (first 3), opens in a dialog
-draft: false      # hide without deleting
-tags: [Go, gRPC]                 # short line under the title
-stack: [Go, gRPC, etcd]          # full list in the details
+order: 1 # lower comes first
+featured: true # show on the home page (first 3), opens in a dialog
+draft: false # hide without deleting
+tags: [Go, gRPC] # short line under the title
+stack: [Go, gRPC, etcd] # full list in the details
 highlights:
   - One measurable result
-cover: ../../assets/projects/my-project.jpg      # optional hero image
-thumbnail: ../../assets/projects/my-thumb.jpg    # optional, defaults to cover
-url: https://example.com          # optional, shows "Live demo"
+cover: ../../assets/projects/my-project.jpg # optional hero image
+thumbnail: ../../assets/projects/my-thumb.jpg # optional, defaults to cover
+url: https://example.com # optional, shows "Live demo"
 repo: https://github.com/you/repo # optional, shows "View source"
 ```
 
@@ -49,9 +49,9 @@ The design lives in `design/main.pen` (open it in [Pencil](https://pen.dev)).
 
 The site is fully static and deploys to Cloudflare (Workers static assets) from Git:
 
-| Setting        | Value                         |
-| -------------- | ----------------------------- |
-| Build command  | `bun run build`               |
+| Setting        | Value                                                                          |
+| -------------- | ------------------------------------------------------------------------------ |
+| Build command  | `bun run build`                                                                |
 | Deploy command | `npx wrangler versions upload` (preview) or `npx wrangler deploy` (production) |
 
 `wrangler.jsonc` points Cloudflare at `dist/`, serves `404.html` for unknown paths, and its `name` must match the Worker name in the Cloudflare dashboard. `public/_headers` sets long-lived caching for Astro's hashed assets.
