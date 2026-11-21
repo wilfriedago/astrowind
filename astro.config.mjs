@@ -1,45 +1,23 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
+// @ts-check
+import { defineConfig, fontProviders } from 'astro/config';
 
-import { defineConfig } from 'astro/config';
-
-import tailwind from '@astrojs/tailwind';
-import sitemap from '@astrojs/sitemap';
-import image from '@astrojs/image';
-import partytown from '@astrojs/partytown';
-
-import { SITE } from './src/config.mjs';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-// https://astro.build/config
+// https://docs.astro.build/en/reference/configuration-reference/
 export default defineConfig({
-	// Astro uses this full URL to generate your sitemap and canonical URLs in your final build
-	site: SITE.origin,
-	base: SITE.basePathname,
-
-	output: 'static',
-
-	integrations: [
-		tailwind({
-			config: {
-				applyBaseStyles: false,
-			},
-		}),
-		sitemap(),
-		image(),
-
-		/* Disable this integration if you don't use Google Analytics (or other external script). */
-		partytown({
-			config: { forward: ['dataLayer.push'] },
-		}),
-	],
-
-	vite: {
-		resolve: {
-			alias: {
-				'~': path.resolve(__dirname, './src'),
-			},
+	site: 'https://wilfriedago.me',
+	fonts: [
+		{
+			provider: fontProviders.google(),
+			name: 'Inter',
+			cssVariable: '--font-inter',
+			weights: [400, 500, 600, 700, 800],
+			fallbacks: ['system-ui', 'sans-serif'],
 		},
-	},
+		{
+			provider: fontProviders.google(),
+			name: 'JetBrains Mono',
+			cssVariable: '--font-jetbrains-mono',
+			weights: [400, 500],
+			fallbacks: ['ui-monospace', 'monospace'],
+		},
+	],
 });

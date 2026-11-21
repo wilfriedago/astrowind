@@ -1,0 +1,84 @@
+---
+import { Font } from 'astro:assets';
+import Header from '../components/Header.astro';
+import Socials from '../components/Socials.astro';
+import { site } from '../data/site';
+import '../styles/global.css';
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const { title, description = site.description } = Astro.props;
+const pageTitle = title ? `${title} | ${site.name}` : site.title;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="theme-color" content="#15172a" />
+		<title>{pageTitle}</title>
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonical} />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={pageTitle} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonical} />
+
+		<Font cssVariable="--font-inter" preload />
+		<Font cssVariable="--font-jetbrains-mono" />
+	</head>
+	<body>
+		<a class="skip-link" href="#main">Skip to content</a>
+		<Header />
+		<main id="main">
+			<slot />
+		</main>
+		<Socials class="fixed-socials" />
+		<slot name="chrome" />
+	</body>
+</html>
+
+<style>
+	.skip-link {
+		position: fixed;
+		top: 1rem;
+		left: 50%;
+		z-index: 200;
+		padding: 0.5rem 1rem;
+		background: var(--c-text);
+		color: var(--c-bg);
+		font-size: 0.875rem;
+		transform: translate(-50%, -200%);
+		transition: transform 200ms ease;
+	}
+
+	.skip-link:focus {
+		transform: translate(-50%, 0);
+	}
+
+	/* Oversized decorative ghost titles must never cause horizontal scrolling. */
+	main {
+		overflow-x: clip;
+	}
+
+	:global(.socials.fixed-socials) {
+		position: fixed;
+		left: var(--gutter);
+		bottom: calc(2.5rem + env(safe-area-inset-bottom, 0px));
+		z-index: 20;
+	}
+
+	@media (max-width: 47.99rem) {
+		:global(.socials.fixed-socials) {
+			display: none;
+		}
+	}
+</style>

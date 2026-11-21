@@ -1,12 +1,23 @@
 ---
-import { SITE } from '~/config.mjs';
-import Layout from '~/layouts/PageLayout.astro';
-import Error404 from '~/components/widgets/Error404.astro';
-
-const title = `Error 404 | ${SITE.name}`;
+import Base from '../layouts/Base.astro';
+import SectionHeading from '../components/SectionHeading.astro';
 ---
 
-<Layout meta={{ title }}>
-	<!--======= 404 - PAGE NOT FOUND ========-->
-	<Error404 />
-</Layout>
+<Base title="Page not found">
+	<div class="page">
+		<SectionHeading as="h1" title="404" subtitle="This page drifted off somewhere" />
+		<a href="/" class="arrow-link">Back home</a>
+	</div>
+</Base>
+
+<style>
+	.page {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 4rem;
+		min-height: 100svh;
+		padding: 7rem var(--gutter);
+	}
+</style>

@@ -1,0 +1,171 @@
+---
+import Icon from './Icon.astro';
+
+/**
+ * Fixed page chrome for the one-page home layout:
+ * - left: circled index of the current section
+ * - right: "01 / 04" counter with a progress track
+ * - bottom-right: button that scrolls to the next section
+ *
+ * Sections are discovered through `[data-section]` on the page.
+ */
+interface Props {
+	total: number;
+}
+
+const { total } = Astro.props;
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+
+<div class="rails" style={`--total: ${total}; --current: 1`} data-rails>
+	<div class="rail-left" aria-hidden="true">
+		<span class="v-line"></span>
+		<span class="circle" data-rail-index>01</span>
+		<span class="v-line"></span>
+	</div>
+
+	<div class="rail-right" aria-hidden="true">
+		<span class="counter">
+			<span data-rail-index>01</span>
+			<span>/</span>
+			<span>{pad(total)}</span>
+		</span>
+		<span class="track"><span class="thumb"></span></span>
+	</div>
+
+	<button class="glass-button next" type="button" data-rail-next>
+		<Icon name="arrow-down" />
+		<span class="visually-hidden" data-rail-next-label>Next section</span>
+	</button>
+</div>
+
+<script>
+	const rails = document.querySelector<HTMLElement>('[data-rails]');
+	const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-section]'));
+
+	if (rails && sections.length) {
+		const indexLabels = rails.querySelectorAll('[data-rail-index]');
+		const nextButton = rails.querySelector<HTMLButtonElement>('[data-rail-next]');
+		const nextLabel = rails.querySelector('[data-rail-next-label]');
+		let current = 0;
+
+		const setCurrent = (index: number) => {
+			current = index;
+			const label = String(index + 1).padStart(2, '0');
+			indexLabels.forEach((el) => (el.textContent = label));
+			rails.style.setProperty('--current', String(index + 1));
+			const isLast = index === sections.length - 1;
+			rails.toggleAttribute('data-last', isLast);
+			if (nextLabel) nextLabel.textContent = isLast ? 'Back to top' : 'Next section';
+		};
+
+		// A section is "current" when it crosses the vertical middle of the viewport.
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					if (entry.isIntersecting) setCurrent(sections.indexOf(entry.target as HTMLElement));
+				}
+			},
+			{ rootMargin: '-50% 0px -50% 0px' },
+		);
+		sections.forEach((section) => observer.observe(section));
+
+		nextButton?.addEventListener('click', () => {
+			const target = sections[current + 1] ?? sections[0];
+			target.scrollIntoView({ block: 'start' });
+		});
+	}
+</script>
+
+<style>
+	.rails {
+		--rail-x: calc(var(--gutter) + 1.4375rem);
+	}
+
+	.rail-left,
+	.rail-right {
+		position: fixed;
+		top: 50%;
+		z-index: 10;
+		display: flex;
+		align-items: center;
+		pointer-events: none;
+	}
+
+	.rail-left {
+		left: var(--rail-x);
+		flex-direction: column;
+		gap: 1.75rem;
+		translate: -50% -50%;
+	}
+
+	.v-line {
+		width: 1px;
+		height: 5.8125rem;
+		background: var(--c-line);
+	}
+
+	.circle {
+		display: grid;
+		place-items: center;
+		width: 2.375rem;
+		height: 2.375rem;
+		border: 1px solid var(--c-line-strong);
+		border-radius: 50%;
+		font-size: 0.625rem;
+		font-weight: 600;
+	}
+
+	.rail-right {
+		right: var(--rail-x);
+		gap: 1.0625rem;
+		translate: 0 -50%;
+	}
+
+	.counter {
+		display: grid;
+		justify-items: center;
+		font-size: 0.625rem;
+		font-weight: 600;
+		line-height: 1.1;
+	}
+
+	.track {
+		position: relative;
+		width: 1px;
+		height: 11.6875rem;
+		background: var(--c-glass);
+	}
+
+	.thumb {
+		position: absolute;
+		left: -0.5px;
+		width: 2px;
+		height: calc(100% / var(--total));
+		top: calc((var(--current) - 1) * 100% / var(--total));
+		background: var(--c-text);
+		transition: top 500ms var(--ease-out);
+	}
+
+	.next {
+		position: fixed;
+		right: var(--gutter);
+		bottom: calc(1.75rem + env(safe-area-inset-bottom, 0px));
+		z-index: 20;
+	}
+
+	.next :global(svg) {
+		transition: rotate 400ms var(--ease-out);
+	}
+
+	.rails[data-last] .next :global(svg) {
+		rotate: 180deg;
+	}
+
+	@media (max-width: 63.99rem) {
+		.rail-left,
+		.rail-right {
+			display: none;
+		}
+	}
+</style>

@@ -1,0 +1,46 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import ProjectRow from '../../components/ProjectRow.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import { site } from '../../data/site';
+import { getProjects } from '../../lib/projects';
+
+const projects = await getProjects();
+---
+
+<Base title={site.projects.title} description="Selected projects, case studies and experiments.">
+	<div class="page">
+		<SectionHeading as="h1" title={site.projects.title} subtitle={site.projects.subtitle} />
+		<ol class="project-list">
+			{projects.map((project, index) => <ProjectRow project={project} index={index} />)}
+		</ol>
+		<a href={site.projects.more.href} class="arrow-link" target="_blank" rel="noopener noreferrer">
+			{site.projects.more.label}
+			<Icon name="arrow-right" />
+		</a>
+	</div>
+</Base>
+
+<style>
+	.page {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		min-height: 100svh;
+		padding: 7rem var(--rail);
+	}
+
+	.project-list {
+		display: grid;
+		gap: 1.75rem;
+		width: 100%;
+		max-width: 758px;
+		margin: 5.75rem 0 3.5rem;
+		padding: 0;
+	}
+
+	.project-list:is(:hover, :focus-within) :global(.row:not(:is(:hover, :focus-within))) {
+		opacity: 0.45;
+	}
+</style>

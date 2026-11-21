@@ -1,2 +1,9 @@
-/assets/*
+# Cloudflare static asset headers (copied to dist/ at build time).
+
+# Astro's hashed build output never changes for a given URL.
+/_astro/*
   Cache-Control: public, max-age=31536000, immutable
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin

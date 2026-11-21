@@ -1,0 +1,57 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { site } from '../data/site';
+
+/**
+ * `rail`: lowercase mono labels (fixed bottom-left, menu).
+ * `follow`: title-case labels (Contact section).
+ */
+type Props = HTMLAttributes<'ul'> & { variant?: 'rail' | 'follow' };
+
+const { class: className, variant = 'rail', ...rest } = Astro.props;
+---
+
+<ul class:list={['socials', variant, className]} {...rest}>
+	{
+		site.socials.map((social) => (
+			<li>
+				<a href={social.href} target="_blank" rel="noopener noreferrer">
+					{variant === 'rail' ? social.short : social.label}
+				</a>
+			</li>
+		))
+	}
+</ul>
+
+<style>
+	.socials {
+		display: flex;
+		flex-wrap: wrap;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		font-size: 0.625rem;
+	}
+
+	.rail {
+		gap: 0.5rem 1.5rem;
+		font-family: var(--font-mono);
+		color: var(--c-muted);
+	}
+
+	.follow {
+		gap: 0.5rem 2.375rem;
+		font-weight: 600;
+		color: var(--c-text);
+	}
+
+	a {
+		transition: color 200ms ease;
+	}
+
+	a:hover {
+		color: var(--c-text);
+		text-decoration: underline;
+		text-underline-offset: 4px;
+	}
+</style>

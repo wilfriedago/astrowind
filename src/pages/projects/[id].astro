@@ -1,0 +1,45 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getProjects } from '../../lib/projects';
+
+export const getStaticPaths = (async () => {
+	const projects = await getProjects();
+	return projects.map((project, index) => ({
+		params: { id: project.id },
+		props: {
+			project,
+			index,
+			total: projects.length,
+			prevHref: projects[index - 1] && `/projects/${projects[index - 1].id}/`,
+			nextHref: projects[index + 1] && `/projects/${projects[index + 1].id}/`,
+		},
+	}));
+}) satisfies GetStaticPaths;
+
+const { project, index, total, prevHref, nextHref } = Astro.props;
+---
+
+<Base title={project.data.title} description={project.data.description}>
+	<div class="page">
+		<ProjectCard
+			project={project}
+			index={index}
+			total={total}
+			mode="page"
+			prevHref={prevHref}
+			nextHref={nextHref}
+			headingLevel="h1"
+		/>
+	</div>
+</Base>
+
+<style>
+	.page {
+		display: grid;
+		place-items: center;
+		min-height: 100svh;
+		padding: 6.5rem var(--gutter) 5rem;
+	}
+</style>

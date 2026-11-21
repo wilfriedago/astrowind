@@ -1,0 +1,157 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+
+interface Props {
+	project: CollectionEntry<'projects'>;
+	index: number;
+}
+
+const { project, index } = Astro.props;
+const { title, tags, cover, thumbnail } = project.data;
+const image = thumbnail ?? cover;
+const number = String(index + 1).padStart(2, '0');
+---
+
+<li class="row">
+	<a href={`/projects/${project.id}/`} class="card" data-project-open={index}>
+		<span class="dots card-dots" aria-hidden="true"></span>
+		<span class="line" aria-hidden="true"></span>
+		<span class="number">{number}</span>
+		<span class="text">
+			<span class="title">{title}</span>
+			<span class="tags">{tags.join(' · ')}</span>
+		</span>
+		<span class="thumb" aria-hidden="true">
+			{image ? <Image src={image} alt="" widths={[400, 800]} sizes="24rem" /> : <span class="placeholder" />}
+		</span>
+	</a>
+</li>
+
+<style>
+	.row {
+		list-style: none;
+		transition: opacity 300ms ease;
+	}
+
+	.card {
+		position: relative;
+		display: grid;
+		/* line (48px + 18px space) · number · text — matches the design's x offsets */
+		grid-template-columns: 4.125rem 1.8125rem 1fr;
+		align-items: center;
+		min-height: 4.375rem;
+		padding: 0.5rem 1rem;
+		overflow: hidden;
+		border: 1px solid var(--c-line-faint);
+		border-radius: 2px;
+		background: var(--c-surface);
+	}
+
+	.card-dots {
+		position: absolute;
+		top: 0.625rem;
+		left: 0.5rem;
+		width: 37px;
+		height: 37px;
+	}
+
+	.line {
+		position: relative;
+		height: 1px;
+		margin-right: 1.125rem;
+		background: rgb(255 255 255 / 0.3);
+		transition: background-color 300ms ease;
+	}
+
+	.card:hover .line,
+	.card:focus-visible .line {
+		background: var(--c-text);
+	}
+
+	.number,
+	.text {
+		position: relative;
+		z-index: 1;
+	}
+
+	.number {
+		font-size: 0.6875rem;
+		font-weight: 600;
+	}
+
+	.text {
+		display: grid;
+		gap: 0.125rem;
+		min-width: 0;
+		max-width: 50%;
+	}
+
+	.title {
+		font-size: 0.6875rem;
+		font-weight: 700;
+	}
+
+	.tags {
+		font-family: var(--font-mono);
+		font-size: 0.5rem;
+		color: var(--c-faint);
+	}
+
+	/* Right half: image fading into the card on its left edge */
+	.thumb {
+		position: absolute;
+		inset: 0 0 0 auto;
+		width: 50%;
+	}
+
+	.thumb::after {
+		content: '';
+		position: absolute;
+		/* -1px hides the image's anti-aliased edge at fractional offsets */
+		inset: 0 auto 0 -1px;
+		width: 69%;
+		background: linear-gradient(
+			90deg,
+			var(--c-surface) 0%,
+			rgb(26 29 43 / 0.8) 35%,
+			rgb(26 29 43 / 0.33) 70%,
+			rgb(26 29 43 / 0) 100%
+		);
+	}
+
+	.thumb :global(img),
+	.placeholder {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 600ms var(--ease-out);
+	}
+
+	.placeholder {
+		background: linear-gradient(135deg, #2a3150, var(--c-surface));
+	}
+
+	.card:hover .thumb :global(img) {
+		transform: scale(1.04);
+	}
+
+	@media (max-width: 39.99rem) {
+		.card {
+			grid-template-columns: 1.8125rem 1fr;
+		}
+
+		.line {
+			display: none;
+		}
+
+		.text {
+			max-width: 65%;
+		}
+
+		.thumb {
+			width: 45%;
+		}
+	}
+</style>

@@ -1,0 +1,14 @@
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	// Must match the Worker's name in the Cloudflare dashboard.
+	"name": "v1-wilfriedago-portfolio",
+	"compatibility_date": "2026-11-19",
+	// Static site: no Worker script, Cloudflare serves the Astro build output directly.
+	"assets": {
+		"directory": "./dist",
+		// "/about" and "/about/" both resolve to about/index.html.
+		"html_handling": "auto-trailing-slash",
+		// Unknown paths get dist/404.html with a 404 status.
+		"not_found_handling": "404-page"
+	}
+}
