@@ -1,5 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="16" fill="#11131d"/>
-  <circle cx="16" cy="16" r="12.5" fill="none" stroke="#f4f5f8" stroke-opacity=".35"/>
-  <text x="16" y="20.2" fill="#f4f5f8" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600" letter-spacing="1" text-anchor="middle">WA</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" fill="#11131d" rx="16"/><circle cx="16" cy="16" r="12.5" fill="none" stroke="#f4f5f8" stroke-opacity=".35"/><text x="16" y="20.2" fill="#f4f5f8" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="600" letter-spacing="1" text-anchor="middle">WA</text></svg>
